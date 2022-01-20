@@ -1,6 +1,6 @@
-package ru.academIts.yudina.range_main;
+package ru.academits.yudina.range_main;
 
-import ru.academIts.yudina.range.Range;
+import ru.academits.yudina.range.Range;
 
 import java.util.Scanner;
 

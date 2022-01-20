@@ -1,4 +1,4 @@
-package ru.academIts.yudina.range;
+package ru.academits.yudina.range;
 
 public class Range {
     private double from;
