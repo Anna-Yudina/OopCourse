@@ -16,7 +16,7 @@ public class Main {
 
         Range range = new Range(from, to);
         double rangeLength = range.getRangeLength();
-        System.out.println("Длина диапазона равна " + rangeLength );
+        System.out.println("Длина диапазона равна " + rangeLength);
 
         System.out.println("Введите любое вещественное число:");
         double number = scanner.nextDouble();
