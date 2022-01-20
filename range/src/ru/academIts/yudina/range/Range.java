@@ -13,27 +13,23 @@ public class Range {
         return from;
     }
 
-    public double getTo() {
-        return to;
-    }
-
     public void setFrom(double from) {
         this.from = from;
+    }
+
+    public double getTo() {
+        return to;
     }
 
     public void setTo(double to) {
         this.to = to;
     }
 
-    public double getRange(){
-        return (this.to - this.from);
+    public double getRangeLength() {
+        return to - from;
     }
 
-    public boolean isInside (double number){
-        if ((this.from <= number) && (this.to >= number)){
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isInside(double number) {
+        return from <= number && to >= number;
     }
 }
