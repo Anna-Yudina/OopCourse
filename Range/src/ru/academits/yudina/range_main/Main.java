@@ -2,6 +2,7 @@ package ru.academits.yudina.range_main;
 
 import ru.academits.yudina.range.Range;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -33,23 +34,13 @@ public class Main {
 
         Range range2 = new Range(from2, to2);
 
-        Range intersectionRange = range1.getIntervalIntersectionTwoIntervals(range1, range2);
+        Range intersectionRange = range1.getIntersection(range2);
         System.out.println("Результат пересечения двух интервалов: " + intersectionRange);
 
-        Range[] unionRanges = range1.getIntervalUnionTwoIntervals(range1, range2);
+        Range[] unionRanges = range1.getUnion(range2);
+        System.out.println("Результат объединения двух интервалов: " + Arrays.toString(unionRanges));
 
-        if (unionRanges[1] == null) {
-            System.out.println("Результат объединения двух интервалов: " + unionRanges[0]);
-        } else {
-            System.out.println("Результат объединения двух интервалов: " + unionRanges[0] + ", " + unionRanges[1]);
-        }
-
-        Range[] differenceRanges = range1.getIntervalDifferenceTwoIntervals(range1, range2);
-
-        if (differenceRanges[1] == null) {
-            System.out.println("Результат разности двух интервалов: " + differenceRanges[0]);
-        } else {
-            System.out.println("Результат разности двух интервалов: " + differenceRanges[0] + ", " + differenceRanges[1]);
-        }
+        Range[] differenceRanges = range1.getDifference(range2);
+        System.out.println("Результат разности двух интервалов: " + Arrays.toString(differenceRanges));
     }
 }
