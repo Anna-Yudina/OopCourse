@@ -35,13 +35,12 @@ public class Range {
 
     @Override
     public String toString() {
-        return "(" + from +
-                ", " + to + ")";
+        return "(" + from + ", " + to + ")";
     }
 
     public Range getIntersection(Range range) {
-        if (to > range.from && range.to > from){
-            return new Range(Math.max(from, range.from),Math.min(to, range.to));
+        if (to > range.from && range.to > from) {
+            return new Range(Math.max(from, range.from), Math.min(to, range.to));
         }
 
         return null;
@@ -49,8 +48,9 @@ public class Range {
 
     public Range[] getUnion(Range range) {
         if (to >= range.from && range.to >= from) {
-            return new Range[]{new Range(Math.min(from, range.from),Math.max(to, range.to))};
+            return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))};
         }
+
         return new Range[]{new Range(from, to), new Range(range.from, range.to)};
     }
 
@@ -60,17 +60,17 @@ public class Range {
                 if (range.to >= to) {
                     return new Range[0];
                 }
+
                 return new Range[]{new Range(range.to, to)};
             } else {
                 if (to <= range.to) {
                     return new Range[]{new Range(from, range.from)};
                 }
+
                 return new Range[]{new Range(from, range.from), new Range(range.to, to)};
             }
-        } else {
-            return new Range[]{new Range(range.from, to)};
         }
+        
+        return new Range[]{new Range(from, to)};
     }
 }
-
-
