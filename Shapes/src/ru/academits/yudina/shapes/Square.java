@@ -1,7 +1,5 @@
 package ru.academits.yudina.shapes;
 
-import java.util.Objects;
-
 public class Square implements Shape {
     private double sideLength;
 
@@ -13,6 +11,10 @@ public class Square implements Shape {
         return sideLength;
     }
 
+    public void setSideLength(double sideLength) {
+        this.sideLength = sideLength;
+    }
+
     public double getWidth() {
         return sideLength;
     }
@@ -22,15 +24,16 @@ public class Square implements Shape {
     }
 
     public double getArea() {
-        return Math.pow(sideLength, 2);
+        return sideLength * sideLength;
     }
 
     public double getPerimeter() {
         return sideLength * 4;
     }
 
+    @Override
     public String toString() {
-        return "Shape square: area = " + getArea() + ", " + "perimeter = " + getPerimeter();
+        return "Квадрат: " + sideLength;
     }
 
     @Override
@@ -38,16 +41,19 @@ public class Square implements Shape {
         if (this == o) {
             return true;
         }
+
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+
+        double epsilon = 1.0e-10;
         Square square = (Square) o;
-        return Double.compare(square.sideLength, sideLength) == 0;
+        return Math.abs(sideLength - square.sideLength) <= epsilon;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sideLength);
+        final int prime = 37;
+        return prime + (int) sideLength * 1000;
     }
 }
-

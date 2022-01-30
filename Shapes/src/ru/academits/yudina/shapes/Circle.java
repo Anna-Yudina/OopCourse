@@ -1,11 +1,17 @@
 package ru.academits.yudina.shapes;
 
-import java.util.Objects;
-
 public class Circle implements Shape {
     private double radius;
 
     public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
         this.radius = radius;
     }
 
@@ -18,7 +24,7 @@ public class Circle implements Shape {
     }
 
     public double getArea() {
-        return Math.PI * Math.pow(radius, 2);
+        return Math.PI * radius * radius;
     }
 
     public double getPerimeter() {
@@ -27,7 +33,7 @@ public class Circle implements Shape {
 
     @Override
     public String toString() {
-        return "Shape circle: area = " + getArea() + ", " + "perimeter = " + getPerimeter();
+        return "Круг: " + radius;
     }
 
     @Override
@@ -35,15 +41,19 @@ public class Circle implements Shape {
         if (this == o) {
             return true;
         }
+
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+
+        double epsilon = 1.0e-10;
         Circle circle = (Circle) o;
-        return Double.compare(circle.radius, radius) == 0;
+        return Math.abs(circle.radius - radius) <= epsilon;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(radius);
+        final int prime = 37;
+        return prime + (int) radius * 1000;
     }
 }
