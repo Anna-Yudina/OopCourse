@@ -13,5 +13,8 @@ public class Main {
 
         Vector vector3 = new Vector(vector2);
         System.out.println(vector3);
+
+        Vector vector4 = new Vector(4, testArray);
+        System.out.println(vector4);
     }
 }
