@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/OopCourse.iml" filepath="$PROJECT_DIR$/.idea/OopCourse.iml" />
       <module fileurl="file://$PROJECT_DIR$/Range/Range.iml" filepath="$PROJECT_DIR$/Range/Range.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Vector/Vector.iml" filepath="$PROJECT_DIR$/Vector/Vector.iml" />
       <module fileurl="file://$PROJECT_DIR$/Shapes/shapes.iml" filepath="$PROJECT_DIR$/Shapes/shapes.iml" />
     </modules>
   </component>
