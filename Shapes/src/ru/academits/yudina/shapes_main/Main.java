@@ -1,11 +1,10 @@
 package ru.academits.yudina.shapes_main;
 
-import ru.academits.yudina.comparator.MaxAreaShape;
-import ru.academits.yudina.comparator.MaxPerimeterShape;
+import ru.academits.yudina.comparator.AreaShapeComparator;
+import ru.academits.yudina.comparator.PerimeterShapeComparator;
 import ru.academits.yudina.shapes.*;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 public class Main {
     public static Shape getMaxAreaShape(Shape[] array) {
@@ -13,19 +12,17 @@ public class Main {
             return null;
         }
 
-        Comparator maxAreaShape = new MaxAreaShape();
-        Arrays.sort(array, maxAreaShape);
-        return array[0];
+        Arrays.sort(array, new AreaShapeComparator());
+        return array[array.length - 1];
     }
 
     public static Shape getSecondSizePerimeterShape(Shape[] array) {
-        if (array.length == 0) {
+        if (array.length <= 1) {
             return null;
         }
 
-        Comparator maxPerimeterShape = new MaxPerimeterShape();
-        Arrays.sort(array, maxPerimeterShape);
-        return array[1];
+        Arrays.sort(array, new PerimeterShapeComparator());
+        return array[array.length - 2];
     }
 
     public static void main(String[] args) {
