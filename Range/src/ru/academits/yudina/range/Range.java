@@ -28,7 +28,6 @@ public class Range {
     public double getLength() {
         return to - from;
     }
-
     public boolean isInside(double number) {
         return number >= from && number <= to;
     }
