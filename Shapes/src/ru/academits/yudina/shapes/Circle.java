@@ -15,25 +15,29 @@ public class Circle implements Shape {
         this.radius = radius;
     }
 
+    @Override
     public double getWidth() {
         return radius * 2;
     }
 
+    @Override
     public double getHeight() {
         return radius * 2;
     }
 
+    @Override
     public double getArea() {
         return Math.PI * radius * radius;
     }
 
+    @Override
     public double getPerimeter() {
         return 2 * Math.PI * radius;
     }
 
     @Override
     public String toString() {
-        return "Круг: " + radius;
+        return "Круг: радиус = " + radius;
     }
 
     @Override
@@ -46,14 +50,13 @@ public class Circle implements Shape {
             return false;
         }
 
-        double epsilon = 1.0e-10;
         Circle circle = (Circle) o;
-        return Math.abs(circle.radius - radius) <= epsilon;
+        return radius == circle.radius;
     }
 
     @Override
     public int hashCode() {
         final int prime = 37;
-        return prime + (int) radius * 1000;
+        return prime + Double.hashCode(radius);
     }
 }

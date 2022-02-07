@@ -9,6 +9,7 @@ public class Rectangle implements Shape {
         this.width = width;
     }
 
+    @Override
     public double getHeight() {
         return height;
     }
@@ -17,6 +18,7 @@ public class Rectangle implements Shape {
         this.height = height;
     }
 
+    @Override
     public double getWidth() {
         return width;
     }
@@ -25,17 +27,19 @@ public class Rectangle implements Shape {
         this.width = width;
     }
 
+    @Override
     public double getArea() {
         return height * width;
     }
 
+    @Override
     public double getPerimeter() {
         return 2 * (height + width);
     }
 
     @Override
     public String toString() {
-        return "Прямоугольник: " + height + ", " + width;
+        return "Прямоугольник: высота = " + height + ", ширина = " + width;
     }
 
     @Override
@@ -48,17 +52,16 @@ public class Rectangle implements Shape {
             return false;
         }
 
-        double epsilon = 1.0e-10;
         Rectangle rectangle = (Rectangle) o;
-        return Math.abs(height - rectangle.height) <= epsilon && Math.abs(width = rectangle.width) <= epsilon;
+        return height == rectangle.height && width == rectangle.width;
     }
 
     @Override
     public int hashCode() {
         final int prime = 37;
         int hash = 1;
-        hash = prime * hash + (int) height * 1000;
-        hash = prime * hash + (int) width * 1000;
+        hash = prime * hash + Double.hashCode(height);
+        hash = prime * hash + Double.hashCode(width);
         return hash;
     }
 }
