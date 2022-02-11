@@ -1,7 +1,7 @@
 package ru.academits.yudina.shapes_main;
 
-import ru.academits.yudina.comparator.AreaShapeComparator;
-import ru.academits.yudina.comparator.PerimeterShapeComparator;
+import ru.academits.yudina.shapes.ShapeAreaComparator;
+import ru.academits.yudina.shapes.ShapePerimeterComparator;
 import ru.academits.yudina.shapes.*;
 
 import java.util.Arrays;
@@ -12,7 +12,7 @@ public class Main {
             return null;
         }
 
-        Arrays.sort(array, new AreaShapeComparator());
+        Arrays.sort(array, new ShapeAreaComparator());
         return array[array.length - 1];
     }
 
@@ -21,7 +21,7 @@ public class Main {
             return null;
         }
 
-        Arrays.sort(array, new PerimeterShapeComparator());
+        Arrays.sort(array, new ShapePerimeterComparator());
         return array[array.length - 2];
     }
 
@@ -41,8 +41,7 @@ public class Main {
         System.out.println("Представлен список фигур:");
 
         for (Shape shape : shapesArray) {
-            System.out.print(shape);
-            System.out.printf("; площадь %.2f ; периметр %.2f %n", shape.getArea(), shape.getPerimeter());
+            System.out.printf(shape + "; площадь %.2f ; периметр %.2f %n", shape.getArea(), shape.getPerimeter());
         }
 
         System.out.println();

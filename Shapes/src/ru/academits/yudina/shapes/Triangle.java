@@ -77,11 +77,11 @@ public class Triangle implements Shape {
 
     @Override
     public double getArea() {
-        double sideLength1 = getSideLength(x1, y1, x2, y2);
-        double sideLength2 = getSideLength(x2, y2, x3, y3);
-        double sideLength3 = getSideLength(x1, y1, x3, y3);
-        double halfPerimeter = (sideLength1 + sideLength2 + sideLength3) / 2;
-        return Math.sqrt(halfPerimeter * (halfPerimeter - sideLength1) * (halfPerimeter - sideLength2) * (halfPerimeter - sideLength3));
+        double side1Length = getSideLength(x1, y1, x2, y2);
+        double side2Length = getSideLength(x2, y2, x3, y3);
+        double side3Length = getSideLength(x1, y1, x3, y3);
+        double halfPerimeter = (side1Length + side2Length + side3Length) / 2;
+        return Math.sqrt(halfPerimeter * (halfPerimeter - side1Length) * (halfPerimeter - side2Length) * (halfPerimeter - side3Length));
     }
 
     @Override
@@ -90,12 +90,12 @@ public class Triangle implements Shape {
     }
 
     private static double getSideLength(double x1, double y1, double x2, double y2) {
-        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
     @Override
     public String toString() {
-        return "Треугольник: точки координат [(" + x1 + ", " + y1 + "), (" + x2 + ", " + y2 + "), (" + x3 + ", " + y3 + ")]";
+        return "Треугольник: координаты точек [(" + x1 + ", " + y1 + "), (" + x2 + ", " + y2 + "), (" + x3 + ", " + y3 + ")]";
     }
 
     @Override
@@ -109,8 +109,9 @@ public class Triangle implements Shape {
         }
 
         Triangle triangle = (Triangle) o;
-        return x1 == triangle.x1 && y1 == triangle.y1 && x2 == triangle.x2 &&
-                y2 == triangle.y2 && x3 == triangle.x3 && y3 == triangle.y3;
+        return x1 == triangle.x1 && y1 == triangle.y1
+                && x2 == triangle.x2 && y2 == triangle.y2
+                && x3 == triangle.x3 && y3 == triangle.y3;
     }
 
     @Override
