@@ -1,4 +1,4 @@
-package ru.academits.yudina.CSVProject;
+package ru.academits.yudina.csv_project;
 
 import java.io.*;
 
@@ -31,5 +31,6 @@ public class CSVProject {
         }
     }
 }
+
 
 
