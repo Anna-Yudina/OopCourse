@@ -3,34 +3,44 @@ package ru.academits.yudina.csv_project;
 import java.io.*;
 
 public class CSVProject {
-    public static void main(String[] args) {
-        String inputFileName = "H:/Аня/работа/помойка/CSVProject.csv";
-        String outputFileName = "H:/Аня/работа/помойка/OutputFile.html";
+    String inputFileName;
+    String outputFileName;
 
+    public CSVProject(String inputFileName, String outputFileName) {
+        this.inputFileName = inputFileName;
+        this.outputFileName = outputFileName;
+    }
+
+    public void getHtmlFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFileName))) {
             try (BufferedWriter writter = new BufferedWriter(new FileWriter(outputFileName))) {
                 String line;
-                writter.write("<table>" + System.lineSeparator());
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("<table>\n");
 
                 while ((line = reader.readLine()) != null) {
-                    String[] data = line.split(";");
-                    writter.write("    <tr>" + System.lineSeparator());
+                    stringBuilder.append("    <tr>\n        <td>");
 
-                    for (String element : data) {
-                        writter.write("        <td>" + element + "</td>" + System.lineSeparator());
+                    for (int i = 0; i < line.length(); ++i) {
+                        char c = line.charAt(i);
+
+                        if (c != ',' & c != '"') {
+                            stringBuilder.append(c);
+                        }
+
+                        if (c == ',') {
+                            stringBuilder.append("</td>\n        <td>");
+                        }
                     }
 
-                    writter.write("    </tr>" + System.lineSeparator());
+                    stringBuilder.append("</td>\n    </tr>\n");
                 }
 
-                writter.write("</table>" + System.lineSeparator());
+                stringBuilder.append("</table>");
+                writter.write(stringBuilder.toString());
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
-
-
-
