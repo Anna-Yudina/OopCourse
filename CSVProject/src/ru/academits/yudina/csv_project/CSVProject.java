@@ -17,6 +17,8 @@ public class CSVProject {
                 String line;
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("<table>\n");
+                String string = "";
+                int quoteCount = 0;
 
                 while ((line = reader.readLine()) != null) {
                     stringBuilder.append("    <tr>\n        <td>");
@@ -25,15 +27,20 @@ public class CSVProject {
                         char c = line.charAt(i);
 
                         if (c != ',' & c != '"') {
-                            stringBuilder.append(c);
+                            string = string + c;
                         }
 
-                        if (c == ',') {
-                            stringBuilder.append("</td>\n        <td>");
+                        if (c == '"') {
+                            quoteCount += 1;
+                        }
+
+                        if (c == ',' && quoteCount % 2 == 0) {
+                            stringBuilder.append(string + "</td>\n        <td>");
+                            string = "";
                         }
                     }
-
-                    stringBuilder.append("</td>\n    </tr>\n");
+                    stringBuilder.append(string + "</td>\n    </tr>\n");
+                    string = "";
                 }
 
                 stringBuilder.append("</table>");
