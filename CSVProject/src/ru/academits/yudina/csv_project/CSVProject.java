@@ -17,35 +17,62 @@ public class CSVProject {
                 String line;
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("<table>\n");
-                String string = "";
+                String tempString = "";
                 int quoteCount = 0;
 
                 while ((line = reader.readLine()) != null) {
-                    stringBuilder.append("    <tr>\n        <td>");
+
+                    if (quoteCount % 2 == 0) {
+                        tempString += "    <tr>\n        <td>";
+                    }
 
                     for (int i = 0; i < line.length(); ++i) {
                         char c = line.charAt(i);
 
                         if (c != ',' & c != '"') {
-                            string = string + c;
+                            tempString = tempString + c;
+                        }
+
+                        if (c == ',') {
+                            if (quoteCount % 2 == 0) {
+                                stringBuilder.append(tempString + "</td>\n        <td>");
+                                tempString = "";
+                            } else {
+                                tempString = tempString + c;
+                            }
                         }
 
                         if (c == '"') {
-                            quoteCount += 1;
-                        }
+                            if (i == line.length() - 1) {
+                                quoteCount += 1;
+                            } else {
+                                if (line.charAt(i + 1) != '"') { // нет дальше кавычек
+                                    quoteCount += 1;
+                                }
 
-                        if (c == ',' && quoteCount % 2 == 0) {
-                            stringBuilder.append(string + "</td>\n        <td>");
-                            string = "";
+                                if (line.charAt(i + 1) == '"') {
+                                    if (quoteCount != 0) {
+                                        tempString = tempString + c;
+                                    }
+                                    quoteCount += 2;
+                                    i++;
+                                }
+                            }
                         }
                     }
-                    stringBuilder.append(string + "</td>\n    </tr>\n");
-                    string = "";
+
+                    if (quoteCount % 2 != 0) {
+                        tempString += "<br/>";
+                    } else {
+                        stringBuilder.append(tempString + "</td>\n    </tr>\n");
+                        tempString = "";
+                    }
                 }
 
                 stringBuilder.append("</table>");
                 writter.write(stringBuilder.toString());
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
