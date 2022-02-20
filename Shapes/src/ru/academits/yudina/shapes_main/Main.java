@@ -1,7 +1,5 @@
 package ru.academits.yudina.shapes_main;
 
-import ru.academits.yudina.shapes.ShapeAreaComparator;
-import ru.academits.yudina.shapes.ShapePerimeterComparator;
 import ru.academits.yudina.shapes.*;
 
 import java.util.Arrays;
@@ -35,7 +33,7 @@ public class Main {
                 new Square(5),
                 new Square(5),
                 new Triangle(1.1, 1, 2, 4, 6, 3),
-                new Triangle(1.1, 1, 2, 4, 6, 3),
+                new Triangle(1.1, 1, 2, 4, 6, 3)
         };
 
         System.out.println("Представлен список фигур:");

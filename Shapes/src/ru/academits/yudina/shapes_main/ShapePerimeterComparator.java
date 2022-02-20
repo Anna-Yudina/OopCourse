@@ -1,4 +1,6 @@
-package ru.academits.yudina.shapes;
+package ru.academits.yudina.shapes_main;
+
+import ru.academits.yudina.shapes.Shape;
 
 import java.util.Comparator;
 
