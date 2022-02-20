@@ -2,8 +2,6 @@ package ru.academits.yudina.vector_main;
 
 import ru.academits.yudina.vector.Vector;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         double[] array1 = new double[]{2, 4, 7, 15, 8, 1, 6};
@@ -31,41 +29,38 @@ public class Main {
         System.out.println(" = " + vector2);
         System.out.println("_______________");
 
-        System.out.print("Результат вычитания двух векторов: " + vector1 + " - " + vector2);
-        vector1.subtract(vector2);
-        System.out.println(" = " + vector1);
-        System.out.print("Результат вычитания двух векторов: " + vector2 + " - " + vector1);
-        vector2.subtract(vector1);
-        System.out.println(" = " + vector2);
+        System.out.print("Результат вычитания двух векторов: " + vector3 + " - " + vector4);
+        vector3.subtract(vector4);
+        System.out.println(" = " + vector3);
+        System.out.print("Результат вычитания двух векторов: " + vector4 + " - " + vector3);
+        vector4.subtract(vector3);
+        System.out.println(" = " + vector4);
         System.out.println("_______________");
 
-        int number = 3;
+        double number = 3;
         System.out.print("Результат умножения вектора на скаляр: " + vector3 + " * " + number);
-        vector3.multiplicationByScalar(number);
+        vector3.multiplyByScalar(number);
         System.out.println(" = " + vector3);
         System.out.println("_______________");
 
         System.out.print("Результат разворота вектора " + vector3 + ": ");
         vector3.reverse();
-        System.out.println(" = " + vector3);
+        System.out.println(vector3);
         System.out.println("_______________");
 
-        System.out.print("Результат получаения длины вектора " + vector3 + ": ");
+        System.out.print("Результат получения длины вектора " + vector3 + ": ");
         System.out.printf("l = %.2f %n", vector1.getLength());
         System.out.println("_______________");
 
         int index1 = 2;
         System.out.print("Результат получения компоненты с индексом " + index1 + " вектора " + vector3 + ": ");
-        System.out.println(vector3.getElementByIndex(index1));
+        System.out.println(vector3.getElement(index1));
         System.out.println("_______________");
 
         double value = 5.6;
         System.out.println("Устанавливаем компоненту вектора " + vector2 + " с индексом " + index1 + " и значением " + value);
-        vector2.setComponentByIndex(index1, value);
+        vector2.setElement(index1, value);
         System.out.println("Вектор после установки компоненты: " + vector2);
-//        int index2 = 5;
-//        vector2.setComponentByIndex(index2, value);
-//        System.out.println("Устанавливаем компоненту вектора " + vector2 + " с индексом " + index2 + " и значением " + value);
         System.out.println("_______________");
 
         double[] array4 = new double[]{6, 8, 5, 3};
@@ -81,7 +76,8 @@ public class Main {
         System.out.println("_______________");
 
         System.out.println("Результат вычитания двух векторов с помощью статического метода: ");
-        System.out.println(vector6 + " - " + vector7 + " = " + Vector.getDifference(vector6, vector7));
+        System.out.print(vector6 + " - " + vector7);
+        System.out.println(" = " + Vector.getDifference(vector6, vector7));
         System.out.println("Результат вычитания двух векторов с помощью статического метода: ");
         System.out.print(vector7 + " - " + vector6);
         System.out.println(" = " + Vector.getDifference(vector7, vector6));
