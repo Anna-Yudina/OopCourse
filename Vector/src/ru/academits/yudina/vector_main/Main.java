@@ -29,32 +29,32 @@ public class Main {
         System.out.println(" = " + vector2);
         System.out.println("_______________");
 
-        System.out.print("Результат вычитания двух векторов: " + vector3 + " - " + vector4);
-        vector3.subtract(vector4);
+        System.out.print("Результат вычитания двух векторов: " + vector3 + " - " + vector5);
+        vector3.subtract(vector5);
         System.out.println(" = " + vector3);
-        System.out.print("Результат вычитания двух векторов: " + vector4 + " - " + vector3);
-        vector4.subtract(vector3);
-        System.out.println(" = " + vector4);
+        System.out.print("Результат вычитания двух векторов: " + vector5 + " - " + vector2);
+        vector5.subtract(vector2);
+        System.out.println(" = " + vector5);
         System.out.println("_______________");
 
         double number = 3;
-        System.out.print("Результат умножения вектора на скаляр: " + vector3 + " * " + number);
-        vector3.multiplyByScalar(number);
-        System.out.println(" = " + vector3);
+        System.out.print("Результат умножения вектора на скаляр: " + vector1 + " * " + number);
+        vector1.multiplyByScalar(number);
+        System.out.println(" = " + vector1);
         System.out.println("_______________");
 
-        System.out.print("Результат разворота вектора " + vector3 + ": ");
-        vector3.reverse();
-        System.out.println(vector3);
+        System.out.print("Результат разворота вектора " + vector1 + ": ");
+        vector1.reverse();
+        System.out.println(vector1);
         System.out.println("_______________");
 
-        System.out.print("Результат получения длины вектора " + vector3 + ": ");
+        System.out.print("Результат получения длины вектора " + vector1 + ": ");
         System.out.printf("l = %.2f %n", vector1.getLength());
         System.out.println("_______________");
 
         int index1 = 2;
-        System.out.print("Результат получения компоненты с индексом " + index1 + " вектора " + vector3 + ": ");
-        System.out.println(vector3.getElement(index1));
+        System.out.print("Результат получения компоненты с индексом " + index1 + " вектора " + vector1 + ": ");
+        System.out.println(vector1.getElement(index1));
         System.out.println("_______________");
 
         double value = 5.6;
