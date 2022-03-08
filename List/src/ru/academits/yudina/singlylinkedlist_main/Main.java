@@ -1,69 +1,76 @@
-package ru.academits.yudina.list_main;
+package ru.academits.yudina.singlylinkedlist_main;
 
 import ru.academits.yudina.singlylinkedlist.SinglyLinkedList;
 
 public class Main {
     public static void main(String[] args) {
         SinglyLinkedList<Integer> myFirstList = new SinglyLinkedList<>();
-        myFirstList.addFirstElement(3);
-        myFirstList.addFirstElement(6);
-        myFirstList.addFirstElement(9);
-        myFirstList.addFirstElement(17);
-        myFirstList.addFirstElement(8);
-        myFirstList.addFirstElement(4);
+        myFirstList.addFirst(3);
+        myFirstList.addFirst(6);
+        myFirstList.addFirst(9);
+        myFirstList.addFirst(17);
+        myFirstList.addFirst(8);
+        myFirstList.addFirst(4);
 
         System.out.println(myFirstList);
 
         System.out.println("Размер списка равен: " + myFirstList.getCount());
 
-        System.out.println("Первый элемент списка: " + myFirstList.getHead());
+        try {
+            System.out.println("Первый элемент списка: " + myFirstList.getFirst());
+        } catch (NullPointerException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
-        System.out.println("Второй элемент списка: " + myFirstList.getHead().getNext());
+        try {
+            System.out.println("Удаляем первый элемент со значением: " + myFirstList.deleteFirst());
+        } catch (NullPointerException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
-        System.out.println("Удаляем первый элемент со значением: " + myFirstList.deleteFirstElement());
         System.out.println(myFirstList);
 
-        int index1 = 4;
+        int index1 = 1;
         try {
-            int value = myFirstList.getElementValue(index1);
+            int value = myFirstList.get(index1);
             System.out.println("Значение элемента по индексу " + index1 + " составляет: " + value);
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             System.out.println("Error: " + e.getMessage());
         }
 
         int index2 = 2;
         int value2 = 10;
         try {
-            int oldValue = myFirstList.changeElementValue(index2, value2);
+            int oldValue = myFirstList.set(index2, value2);
             System.out.println("Предыдущее значение по индексу " + index2 + " составляет: " + oldValue);
             System.out.println(myFirstList);
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             System.out.println("Error: " + e.getMessage());
         }
 
-        int index3 = 3;
+        int index3 = 0;
         try {
-            int deleteValue = myFirstList.deleteElement(index3);
+            int deleteValue = myFirstList.deleteByIndex(index3);
             System.out.println("Удаляемое значение по индексу " + index3 + " составляет: " + deleteValue);
             System.out.println(myFirstList);
             System.out.println("Размер списка после удаления: " + myFirstList.getCount());
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             System.out.println("Error: " + e.getMessage());
         }
 
-        int index4 = 0;
+        int index4 = 2;
         int value4 = 5;
         try {
             System.out.println("Выполняем вставку элемента по индексу " + index4 + " со значением " + value4);
-            myFirstList.addElement(index4, value4);
+            myFirstList.add(index4, value4);
             System.out.println("Итог: " + myFirstList);
             System.out.println("Размер списка после вставки: " + myFirstList.getCount());
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             System.out.println("Error: " + e.getMessage());
         }
 
-        int value5 = 5;
-        String massage = myFirstList.deleteElementValue(value5) ? "успех" : "ошибка";
+        Integer value5 = null;
+        String massage = myFirstList.deleteByDate(value5) ? "успех" : "ошибка";
         System.out.println("Удаление элемента по значению " + value5 + ":  " + massage);
         System.out.println("Итог: " + myFirstList);
         System.out.println("Размер списка после удаления: " + myFirstList.getCount());
@@ -73,5 +80,15 @@ public class Main {
 
         SinglyLinkedList<Integer> newList = myFirstList.getCopy();
         System.out.println("Копирование списка: " + newList);
+
+        System.out.println("Добавляем в новый");
+        newList.addFirst(8);
+        System.out.println(myFirstList);
+        System.out.println(newList);
+
+        System.out.println("Добавляем в старый");
+        myFirstList.addFirst(9);
+        System.out.println(myFirstList);
+        System.out.println(newList);
     }
 }

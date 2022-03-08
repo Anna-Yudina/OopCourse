@@ -7,159 +7,151 @@ public class SinglyLinkedList<T> {
     public SinglyLinkedList() {
     }
 
-    public SinglyLinkedList(Node<T> head) {
-        this.head = head;
+    public SinglyLinkedList(int count) {
+        this.count = count;
     }
 
     public int getCount() {
         return count;
     }
 
-    public Node<T> getHead() {
-        return head;
+    public T getFirst() {
+        if (this.head == null) {
+            throw new NullPointerException("Ошибка. Список пуст");
+        }
+
+        return head.getData();
     }
 
     @Override
     public String toString() {
+        if (this.head == null) {
+            return "{}";
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{");
 
         for (Node<T> node = head; node != null; node = node.getNext()) {
-            stringBuilder.append(node.getData()).append(",");
+            stringBuilder.append(node.getData()).append(", ");
         }
 
-        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(","));
+        stringBuilder.setLength(stringBuilder.length() - 2);
         stringBuilder.append("}");
         return stringBuilder.toString();
     }
 
-    public void addFirstElement(T data) {
-        Node<T> tempNode = new Node<>();
-        tempNode.setData(data);
-
-        if (count != 0) {
-            tempNode.setNext(head);
+    public void addFirst(T data) {
+        if (count == 0) {
+            head = new Node<>(data);
+        } else {
+            head = new Node<>(data, head);
         }
 
-        head = tempNode;
         count++;
     }
 
-    public Node<T> deleteFirstElement() {
-        Node<T> tempHead = head;
+    public T deleteFirst() {
+        if (this.head == null) {
+            throw new NullPointerException("Ошибка. Список пуст");
+        }
+
+        Node<T> deleteHead = head;
         head = head.getNext();
         count--;
-        return tempHead;
+        return deleteHead.getData();
     }
 
-    public T getElementValue(int index) {
-        Node<T> node = head;
-
-        if (count <= index) {
-            throw new IllegalArgumentException("Индекс " + index + " выходит за пределы размера списка. " +
-                    "Допустимые значения должны быть в диапазоне [0, " + (count - 1) + "].");
+    public T get(int index) {
+        if (this.head == null) {
+            throw new NullPointerException("Ошибка. Список пуст");
         }
 
-        for (int i = 0; i < index; i++) {
-            node = node.getNext();
-        }
+        controlIndex(index);
 
-        return node.getData();
+        return getNode(index).getData();
     }
 
-    public T changeElementValue(int index, T value) {
-        Node<T> node = head;
+    public T set(int index, T data) {
+        controlIndex(index);
 
-        if (count <= index) {
-            throw new IllegalArgumentException("Индекс " + index + " выходит за пределы размера списка. " +
-                    "Допустимые значения должны быть в диапазоне [0, " + (count - 1) + "].");
-        }
+        Node<T> node = getNode(index);
 
-        for (int i = 0; i < index; i++) {
-            node = node.getNext();
-        }
-
-        T oldValue = node.getData();
-        node.setData(value);
-        return oldValue;
+        T oldData = node.getData();
+        node.setData(data);
+        return oldData;
     }
 
-    public T deleteElement(int index) {
-        Node<T> node = head;
-
-        if (count <= index) {
-            throw new IllegalArgumentException("Индекс " + index + " выходит за пределы размера списка. " +
-                    "Допустимые значения должны быть в диапазоне [0, " + (count - 1) + "].");
-        }
-
-        for (int i = 0; i < index - 1; i++) {
-            node = node.getNext();
-        }
-
-        T value = node.getNext().getData();
-        node.setNext(node.getNext().getNext());
-        count--;
-        return value;
-    }
-
-    public void addElement(int index, T value) {
-        Node<T> newNode = new Node<>(value);
-        Node<T> node = head;
-
-        if (count <= index) {
-            throw new IllegalArgumentException("Индекс " + index + " выходит за пределы размера списка. " +
-                    "Допустимые значения должны быть в диапазоне [0, " + (count - 1) + "].");
-        }
+    public T deleteByIndex(int index) {
+        controlIndex(index);
 
         if (index == 0) {
-            addFirstElement(value);
-        } else {
-            for (int i = 0; i < index - 1; i++) {
-                node = node.getNext();
-            }
-
-            newNode.setNext(node.getNext());
-            node.setNext(newNode);
-            count++;
+            return deleteFirst();
         }
+
+        Node<T> node = getNode(index - 1);
+
+        T data = node.getNext().getData();
+        node.setNext(node.getNext().getNext());
+        count--;
+        return data;
     }
 
-    public boolean deleteElementValue(T value) {
-        boolean isDelete = false;
-        for (Node<T> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
-            if (value.equals(p.getData())) {
-                if (prev == null) {
-                    deleteFirstElement();
+    public void add(int index, T data) {
+        controlIndex(index - 1);
+
+        if (index == 0) {
+            addFirst(data);
+            return;
+        }
+
+        Node<T> node = getNode(index - 1);
+
+        node.setNext(new Node<>(data, node.getNext()));
+        count++;
+    }
+
+    public boolean deleteByDate(T data) {
+        if (data == null) {
+            return false;
+        }
+
+        for (Node<T> current = head, previous = null; current != null; previous = current, current = current.getNext()) {
+            if (data.equals(current.getData())) {
+                if (previous == null) {
+                    deleteFirst();
                 } else {
-                    prev.setNext(p.getNext());
+                    previous.setNext(current.getNext());
                     count--;
                 }
 
-                isDelete = true;
-                break;
+                return true;
             }
         }
 
-        return isDelete;
+        return false;
     }
 
     public void reverse() {
         Node<T> current = head;
         Node<T> previous = null;
-        Node<T> forward;
 
         while (current != null) {
-            forward = current.getNext();
+            Node<T> next = current.getNext();
             current.setNext(previous);
             previous = current;
-            current = forward;
+            current = next;
         }
 
         head = previous;
     }
 
     public SinglyLinkedList<T> getCopy() {
-        SinglyLinkedList<T> newList = new SinglyLinkedList<>();
+        if (this.head == null) {
+            return null;
+        }
+
+        SinglyLinkedList<T> newList = new SinglyLinkedList<>(count);
         newList.head = head;
 
         for (Node<T> node = head; node != null; node = node.getNext()) {
@@ -167,5 +159,22 @@ public class SinglyLinkedList<T> {
         }
 
         return newList;
+    }
+
+    public void controlIndex(int index) {
+        if (index < 0 || index >= count) {
+            throw new IndexOutOfBoundsException("Индекс " + index + " выходит за пределы размера списка. " +
+                    "Допустимые значения должны быть в диапазоне [0, " + (count - 1) + "].");
+        }
+    }
+
+    public Node<T> getNode(int index) {
+        Node<T> node = head;
+
+        for (int i = 0; i < index; i++) {
+            node = node.getNext();
+        }
+
+        return node;
     }
 }

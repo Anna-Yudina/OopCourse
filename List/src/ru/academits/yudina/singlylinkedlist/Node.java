@@ -1,39 +1,31 @@
 package ru.academits.yudina.singlylinkedlist;
 
-public class Node<T> {
-    private T data;
-    private Node<T> next;
+class Node<T> {
+    protected T data;
+    protected Node<T> next;
 
-    public Node() {
-    }
-
-    public Node(T data) {
+    protected Node(T data) {
         this.data = data;
     }
 
-    public Node(T data, Node<T> next) {
+    protected Node(T data, Node<T> next) {
         this.data = data;
         this.next = next;
     }
 
-    public T getData() {
+    protected T getData() {
         return data;
     }
 
-    public Node<T> getNext() {
+    protected Node<T> getNext() {
         return next;
     }
 
-    public void setData(T data) {
+    protected void setData(T data) {
         this.data = data;
     }
 
-    public void setNext(Node<T> next) {
+    protected void setNext(Node<T> next) {
         this.next = next;
-    }
-
-    @Override
-    public String toString() {
-        return "" + data;
     }
 }
