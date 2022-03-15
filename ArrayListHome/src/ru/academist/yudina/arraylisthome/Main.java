@@ -8,21 +8,21 @@ public class Main {
     public static void main(String[] args) {
         // 1. Прочитать в список все строки из файла
         File inputFile = new File("C:/Users/anuta/IdeaProjects/OopCourse/ArrayListHome/src/ru/academist/yudina/inputFile.txt");
-        ArrayList<String> fileRawsArrayList = new ArrayList<>();
+        ArrayList<String> fileRowsList = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
             String line = reader.readLine();
 
             while (line != null) {
-                fileRawsArrayList.add(line);
+                fileRowsList.add(line);
                 line = reader.readLine();
             }
         } catch (IOException e) {
-            System.out.println("Ошибка при чтении файла");
+            System.out.println("Файл не найден");
         }
 
         System.out.println("Вывод содержимого файла: ");
-        System.out.println(fileRawsArrayList);
+        System.out.println(fileRowsList);
         System.out.println("---------------");
 
         //2. Есть список из целых чисел. Удалить из него все четные числа. В
@@ -32,9 +32,7 @@ public class Main {
         System.out.println("Список до изменений: " + task2NumbersList);
 
         for (int i = 0; i < task2NumbersList.size(); i++) {
-            int number = task2NumbersList.get(i);
-
-            if (number % 2 == 0) {
+            if (task2NumbersList.get(i) % 2 == 0) {
                 task2NumbersList.remove(i);
                 i--;
             }
@@ -47,11 +45,11 @@ public class Main {
         // Надо создать новый список, в котором будут элементы первого списка в таком же порядке, но без повторений
         //Например, был список [1, 5, 2, 1, 3, 5], должен получиться новый список [1, 5, 2, 3]
         System.out.println("Необходимо из списка удалить все повторения.");
-        ArrayList<Integer> task3NumbersList = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
-        System.out.println("Список до изменений: " + task3NumbersList);
+        ArrayList<Integer> numbersList = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
+        System.out.println("Список до изменений: " + numbersList);
 
-        ArrayList<Integer> noRepetitionsNumbersList = new ArrayList<>(task3NumbersList.size());
-        for (Integer integer : task3NumbersList) {
+        ArrayList<Integer> noRepetitionsNumbersList = new ArrayList<>(numbersList.size());
+        for (Integer integer : numbersList) {
             if (!noRepetitionsNumbersList.contains(integer)) {
                 noRepetitionsNumbersList.add(integer);
             }
