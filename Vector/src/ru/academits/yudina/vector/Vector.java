@@ -51,41 +51,36 @@ public class Vector {
     }
 
     public void add(Vector vector) {
+        int min = Math.min(elements.length, vector.elements.length);
         int max = Math.max(elements.length, vector.elements.length);
 
-        if (elements.length != vector.elements.length) {
+        if (elements.length < vector.elements.length) {
             double[] array = new double[max];
-
-            if (elements.length > vector.elements.length) {
-                System.arraycopy(vector.elements, 0, array, 0, vector.elements.length);
-                vector.elements = array;
-            } else {
-                System.arraycopy(elements, 0, array, 0, elements.length);
-                elements = array;
-            }
+            System.arraycopy(elements, 0, array, 0, elements.length);
+            System.arraycopy(vector.elements, min, array, min, max - min);
+            elements = array;
         }
 
-        for (int i = 0; i < max; i++) {
+        for (int i = 0; i < min; i++) {
             elements[i] += vector.elements[i];
         }
     }
 
     public void subtract(Vector vector) {
         int max = Math.max(elements.length, vector.elements.length);
+        int min = Math.min(elements.length, vector.elements.length);
 
-        if (elements.length != vector.elements.length) {
+        if (elements.length < vector.elements.length) {
             double[] array = new double[max];
+            System.arraycopy(elements, 0, array, 0, elements.length);
+            elements = array;
 
-            if (elements.length > vector.elements.length) {
-                System.arraycopy(vector.elements, 0, array, 0, vector.elements.length);
-                vector.elements = array;
-            } else {
-                System.arraycopy(elements, 0, array, 0, elements.length);
-                elements = array;
+            for (int i = min; i < max; i++) {
+                elements[i] = vector.elements[i] * (-1);
             }
         }
 
-        for (int i = 0; i < max; i++) {
+        for (int i = 0; i < min; i++) {
             elements[i] -= vector.elements[i];
         }
     }
@@ -112,7 +107,7 @@ public class Vector {
 
     public double getElement(int index) {
         if (index < 0 || index >= elements.length) {
-            throw new ArrayIndexOutOfBoundsException("Индекс " + index + " выходит за пределы размерности вектора. " +
+            throw new IndexOutOfBoundsException("Индекс " + index + " выходит за пределы размерности вектора. " +
                     "Допустимые значения должны быть в диапазоне [0, " + (elements.length - 1) + "].");
         }
 
@@ -121,7 +116,7 @@ public class Vector {
 
     public void setElement(int index, double number) {
         if (index < 0 || index >= elements.length) {
-            throw new ArrayIndexOutOfBoundsException("Индекс " + index + " выходит за пределы размерности вектора. " +
+            throw new IndexOutOfBoundsException("Индекс " + index + " выходит за пределы размерности вектора. " +
                     "Допустимые значения должны быть в диапазоне [0, " + (elements.length - 1) + "].");
         }
 
@@ -148,15 +143,15 @@ public class Vector {
     }
 
     public static Vector getSum(Vector vector1, Vector vector2) {
-        Vector newVector = new Vector(vector1);
-        newVector.add(vector2);
-        return new Vector(newVector);
+        Vector resultVector = new Vector(vector1);
+        resultVector.add(vector2);
+        return resultVector;
     }
 
     public static Vector getDifference(Vector vector1, Vector vector2) {
-        Vector newVector = new Vector(vector1);
-        newVector.subtract(vector2);
-        return new Vector(newVector);
+        Vector resultVector = new Vector(vector1);
+        resultVector.subtract(vector2);
+        return resultVector;
     }
 
     public static double getScalarProduct(Vector vector1, Vector vector2) {
