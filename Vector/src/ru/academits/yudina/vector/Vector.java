@@ -51,36 +51,21 @@ public class Vector {
     }
 
     public void add(Vector vector) {
-        int min = Math.min(elements.length, vector.elements.length);
-        int max = Math.max(elements.length, vector.elements.length);
-
         if (elements.length < vector.elements.length) {
-            double[] array = new double[max];
-            System.arraycopy(elements, 0, array, 0, elements.length);
-            System.arraycopy(vector.elements, min, array, min, max - min);
-            elements = array;
+            elements = Arrays.copyOf(elements, vector.elements.length);
         }
 
-        for (int i = 0; i < min; i++) {
+        for (int i = 0; i < vector.elements.length; i++) {
             elements[i] += vector.elements[i];
         }
     }
 
     public void subtract(Vector vector) {
-        int max = Math.max(elements.length, vector.elements.length);
-        int min = Math.min(elements.length, vector.elements.length);
-
         if (elements.length < vector.elements.length) {
-            double[] array = new double[max];
-            System.arraycopy(elements, 0, array, 0, elements.length);
-            elements = array;
-
-            for (int i = min; i < max; i++) {
-                elements[i] = vector.elements[i] * (-1);
+            elements = Arrays.copyOf(elements, vector.elements.length);
             }
-        }
 
-        for (int i = 0; i < min; i++) {
+        for (int i = 0; i < vector.elements.length; i++) {
             elements[i] -= vector.elements[i];
         }
     }
