@@ -69,8 +69,11 @@ public class Main {
             System.out.println("Error: " + e.getMessage());
         }
 
+        System.out.println("______________________");
+        myFirstList.add(2, null);
+        System.out.println(myFirstList);
         Integer value5 = null;
-        String massage = myFirstList.deleteByDate(value5) ? "успех" : "ошибка";
+        String massage = myFirstList.deleteByData(value5) ? "успех" : "ошибка";
         System.out.println("Удаление элемента по значению " + value5 + ":  " + massage);
         System.out.println("Итог: " + myFirstList);
         System.out.println("Размер списка после удаления: " + myFirstList.getCount());
@@ -78,17 +81,25 @@ public class Main {
         myFirstList.reverse();
         System.out.println("Реверс итог: " + myFirstList);
 
+        System.out.println("Вставка по индексу 0");
+        myFirstList.add(0, 1);
+        System.out.println(myFirstList);
+
         SinglyLinkedList<Integer> newList = myFirstList.getCopy();
         System.out.println("Копирование списка: " + newList);
 
-        System.out.println("Добавляем в новый");
-        newList.addFirst(8);
-        System.out.println(myFirstList);
-        System.out.println(newList);
+        myFirstList.add(2, 4);
+        System.out.println("Старый список " + myFirstList);
+        System.out.println("Новый список: " + newList);
 
-        System.out.println("Добавляем в старый");
-        myFirstList.addFirst(9);
-        System.out.println(myFirstList);
-        System.out.println(newList);
+        newList.add(4, 11);
+        System.out.println("Старый список " + myFirstList);
+        System.out.println("Новый список: " + newList);
+
+        newList.add(1, 14);
+        System.out.println("Старый список " + myFirstList);
+        System.out.println("Новый список: " + newList);
+        System.out.println("Размер старого списка: " + myFirstList.getCount());
+        System.out.println("Размер нового списка: " + newList.getCount());
     }
 }
