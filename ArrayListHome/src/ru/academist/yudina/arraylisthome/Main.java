@@ -8,21 +8,21 @@ public class Main {
     public static void main(String[] args) {
         // 1. Прочитать в список все строки из файла
         File inputFile = new File("C:/Users/anuta/IdeaProjects/OopCourse/ArrayListHome/src/ru/academist/yudina/inputFile.txt");
-        ArrayList<String> fileRowsList = new ArrayList<>();
+        ArrayList<String> fileLinesList = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
             String line = reader.readLine();
 
             while (line != null) {
-                fileRowsList.add(line);
+                fileLinesList.add(line);
                 line = reader.readLine();
             }
         } catch (IOException e) {
-            System.out.println("Файл не найден");
+            System.out.println("Ошибка ввода-вывода");
         }
 
         System.out.println("Вывод содержимого файла: ");
-        System.out.println(fileRowsList);
+        System.out.println(fileLinesList);
         System.out.println("---------------");
 
         //2. Есть список из целых чисел. Удалить из него все четные числа. В
@@ -46,15 +46,15 @@ public class Main {
         //Например, был список [1, 5, 2, 1, 3, 5], должен получиться новый список [1, 5, 2, 3]
         System.out.println("Необходимо из списка удалить все повторения.");
         ArrayList<Integer> numbersList = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
-        System.out.println("Список до изменений: " + numbersList);
+        System.out.println("Дан список чисел: " + numbersList);
 
         ArrayList<Integer> noRepetitionsNumbersList = new ArrayList<>(numbersList.size());
-        for (Integer integer : numbersList) {
-            if (!noRepetitionsNumbersList.contains(integer)) {
-                noRepetitionsNumbersList.add(integer);
+        for (Integer number : numbersList) {
+            if (!noRepetitionsNumbersList.contains(number)) {
+                noRepetitionsNumbersList.add(number);
             }
         }
 
-        System.out.println("Список после изменений: " + noRepetitionsNumbersList);
+        System.out.println("Получен новый список чисел, в котором убраны повторения из изначального списка чисел: " + noRepetitionsNumbersList);
     }
 }
