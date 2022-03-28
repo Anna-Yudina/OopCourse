@@ -1,6 +1,7 @@
 package ru.academits.yudina.lambda_main;
 
 import ru.academits.yudina.lambda.Person;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class Main {
                 .orElse(0.0);
     }
 
-    public static Map<String, Double> getPersonMapFromList(List<Person> list) {
+    public static Map<String, Double> getAverageAgesByNames(List<Person> list) {
         return list.stream()
                 .collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
     }
@@ -66,18 +67,18 @@ public class Main {
                 new Person("Мария", 30)
         );
 
-        List<String> uniqueNameList = getUniqueNamesList(personArrayList);
+        List<String> uniqueNamesList = getUniqueNamesList(personArrayList);
         System.out.println("Изначальный список людей: " + personArrayList);
-        System.out.println("Список людей с уникальными именами." + uniqueNameList);
+        System.out.println("Список людей с уникальными именами." + uniqueNamesList);
 
-        String uniqueNames = getUniqueNamesString(personArrayList);
-        System.out.println("Список уникальных имен. " + uniqueNames);
+        String uniqueNamesString = getUniqueNamesString(personArrayList);
+        System.out.println("Список уникальных имен. " + uniqueNamesString);
 
-        double underageAverageAge = getUnderagePersonsAverageAge(personArrayList);
-        System.out.printf("Средний возраст людей младше 18 лет: %.2f%n", underageAverageAge);
+        double underagePersonsAverageAge = getUnderagePersonsAverageAge(personArrayList);
+        System.out.printf("Средний возраст людей младше 18 лет: %.2f%n", underagePersonsAverageAge);
 
-        Map<String, Double> personMapFromList = getPersonMapFromList(personArrayList);
-        System.out.println("Получение списка (ключ - имена, знвачение - средний возраст): " + personMapFromList);
+        Map<String, Double> averageAgesByNames = getAverageAgesByNames(personArrayList);
+        System.out.println("Получение списка (ключ - имена, значение - средний возраст): " + averageAgesByNames);
 
         System.out.println("Печатаем список людей возрастом от 20 до 45 лет в порядке убывания: ");
         printPersonsFrom45To20Age(personArrayList);
