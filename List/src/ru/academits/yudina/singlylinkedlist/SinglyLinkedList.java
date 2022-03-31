@@ -50,10 +50,10 @@ public class SinglyLinkedList<T> {
             throw new NoSuchElementException("Ошибка. Список пуст");
         }
 
-        Node<T> deletedData = head;
+        T deletedData = head.getData();
         head = head.getNext();
         count--;
-        return deletedData.getData();
+        return deletedData;
     }
 
     public T get(int index) {
@@ -137,23 +137,17 @@ public class SinglyLinkedList<T> {
             return newList;
         }
 
-        Node<T> newPrevious = null;
-        Node<T> newCurrent;
+        Node<T> newCurrent = new Node<>(head.getData());
+        newList.head = newCurrent;
+        Node<T> newPrevious = newCurrent;
 
-        for (Node<T> current = head; current != null; current = current.getNext()) {
-            T data = current.getData();
-            newCurrent = new Node<>(data);
-            newList.count++;
-
-            if (newPrevious == null) {
-                newList.head = newCurrent;
-            } else {
-                newPrevious.setNext(newCurrent);
-            }
-
+        for (Node<T> current = head.getNext(); current != null; current = current.getNext()) {
+            newCurrent = new Node<>(current.getData());
+            newPrevious.setNext(newCurrent);
             newPrevious = newCurrent;
         }
 
+        newList.count = count;
         return newList;
     }
 
