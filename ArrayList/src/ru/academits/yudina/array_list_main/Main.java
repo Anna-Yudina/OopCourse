@@ -1,6 +1,6 @@
-package ru.academits.yudina.arraylist_main;
+package ru.academits.yudina.array_list_main;
 
-import ru.academits.yudina.arraylist.MyArrayList;
+import ru.academits.yudina.array_list.MyArrayList;
 
 import java.util.Iterator;
 
@@ -18,16 +18,16 @@ public class Main {
         list.add(9);
         list.add(10);
 
-        System.out.println("Печатаем список: " + list);
+        System.out.println("Печатаем список:" + list);
 
         System.out.println("___________________");
         int index1 = 9;
-        System.out.println("Проверка метода remove(index): ");
-        System.out.println("Удаляемое значение по индексу 9: " + list.remove(index1));
-        System.out.println("Список после удаления: " + list);
+        System.out.println("Проверка метода remove(index):");
+        System.out.println("Удаляемое значение по индексу 9:" + list.remove(index1));
+        System.out.println("Список после удаления:" + list);
 
         System.out.println("___________________");
-        System.out.println("Длина списка: " + list.size());
+        System.out.println("Длина списка:" + list.size());
 
         System.out.println("___________________");
         int index2 = 2;
@@ -36,13 +36,13 @@ public class Main {
         System.out.println("Добавляем новый элемент со значением " + number1 + " по индексу: " + index2 + ", результат: " + list);
 
         System.out.println("___________________");
-        System.out.println("Проверка метода 'boolean contains(Object object)': ");
+        System.out.println("Проверка метода 'boolean contains(Object object)':");
         int number2 = 5;
         String massage1 = list.contains(number2) ? "содержит" : "не содержит";
-        System.out.println("Список " + list+ " " + massage1 + " элемент со значением " + number2);
+        System.out.println("Список " + list + " " + massage1 + " элемент со значением " + number2);
 
         System.out.println("___________________");
-        System.out.println("Проверка метода 'Object[] toArray()': ");
+        System.out.println("Проверка метода 'Object[] toArray()':");
         Object[] numbersArray = list.toArray();
 
         for (Object object : numbersArray) {
@@ -51,7 +51,7 @@ public class Main {
 
         System.out.println();
         System.out.println("___________________");
-        System.out.println("Проверка метода '<E> E[] toArray(E[] array)': ");
+        System.out.println("Проверка метода '<E> E[] toArray(E[] array)':");
 
         Integer[] numbersArray2 = new Integer[list.size()];
         numbersArray2 = list.toArray(list.toArray(numbersArray2));
@@ -62,23 +62,23 @@ public class Main {
 
         System.out.println();
         System.out.println("___________________");
-        System.out.println("Проверка метода 'boolean remove(Object object)': ");
+        System.out.println("Проверка метода 'boolean remove(Object object)':");
         int number3 = 6;
         System.out.println("Удаляем из списка " + list + " элемент со значением " + number3);
         list.remove((Object) number3);
-        System.out.println("Получаем список после удаления: " + list);
+        System.out.println("Получаем список после удаления:" + list);
 
         System.out.println("___________________");
-        System.out.println("Проверка метода 'E set(int index, E element)': ");
+        System.out.println("Проверка метода 'E set(int index, E element)':");
         int index3 = 8;
         int number4 = 16;
         System.out.println("Вставляем элемент по индексу " + index3 + " со значением " + number4 + " в список " + list);
         int lastValue = list.set(index3, number4);
-        System.out.println("Старое значение элемента: " + lastValue);
-        System.out.println("Список после применения метода: " + list);
+        System.out.println("Старое значение элемента:" + lastValue);
+        System.out.println("Список после применения метода:" + list);
 
         System.out.println("___________________");
-        System.out.println("Проверка метода 'boolean containsAll(Collection<?> collection)': ");
+        System.out.println("Проверка метода 'boolean containsAll(Collection<?> collection)':");
         MyArrayList<String> namesList1 = new MyArrayList<>(3);
         namesList1.add("Марина");
         namesList1.add("Лиза");
@@ -91,12 +91,12 @@ public class Main {
         namesList2.add("Света");
         namesList2.add("Степан");
 
-        System.out.println("Проверим содержит ли первый список " + namesList1 + " все элементы второго списка " + namesList2 );
+        System.out.println("Проверим содержит ли первый список " + namesList1 + " все элементы второго списка " + namesList2);
         String massage2 = namesList1.containsAll(namesList2) ? "Содержит!" : "Не содержит!";
         System.out.println(massage2);
 
         System.out.println("______________");
-        System.out.println("Проверка метода 'boolean addAll(Collection<? extends E> collection)': ");
+        System.out.println("Проверка метода 'boolean addAll(Collection<? extends E> collection)':");
         System.out.println("Добавим в список " + namesList1 + " элементы списка " + namesList2);
         namesList1.addAll(namesList2);
         System.out.println("Получили результат: " + namesList1);
@@ -146,21 +146,21 @@ public class Main {
         numberList4.add(8);
 
         System.out.println("Даны 2 списка: " + numberList3 + "; " + numberList4);
-        System.out.println("Удалили второй список из первого списка: ");
+        System.out.println("Удалили второй список из первого списка:");
         numberList3.removeAll(numberList4);
         System.out.println(numberList3);
 
         System.out.println("______________");
         System.out.println("Проверка метода 'boolean retainAll(Collection<?> collection)':");
-        numberList3.add(0,1);
-        numberList3.add(2,3);
-        numberList3.add(3,4);
+        numberList3.add(0, 1);
+        numberList3.add(2, 3);
+        numberList3.add(3, 4);
         System.out.println("Даны 2 списка: " + numberList3 + "; " + numberList4);
         numberList3.retainAll(numberList4);
         System.out.println("Результат работы метода: " + numberList3);
 
         System.out.println("______________");
-        System.out.println("Проверка итератора: ");
+        System.out.println("Проверка итератора:");
 
         for (int number : numberList4) {
             System.out.print(number + ", ");
@@ -171,5 +171,12 @@ public class Main {
             Integer number = iterator.next();
             System.out.print(number + ", ");
         }
+
+        System.out.println(System.lineSeparator() + "______________");
+        System.out.println("Проверка метода 'int indexOf(Object object) ':");
+        System.out.println("Дан список: " + numberList3);
+        int number5 = 3;
+        int index4 = numberList3.indexOf(number5);
+        System.out.println("Полученный индекс после выполнения метода: " + index4);
     }
 }
