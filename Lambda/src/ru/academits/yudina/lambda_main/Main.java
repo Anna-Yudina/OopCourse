@@ -44,7 +44,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        List<Person> personArrayList = Arrays.asList(
+        List<Person> personsList = Arrays.asList(
                 new Person("Иван", 17),
                 new Person("Максим", 18),
                 new Person("Тимур", 25),
@@ -67,20 +67,20 @@ public class Main {
                 new Person("Мария", 30)
         );
 
-        List<String> uniqueNamesList = getUniqueNamesList(personArrayList);
-        System.out.println("Изначальный список людей: " + personArrayList);
+        List<String> uniqueNamesList = getUniqueNamesList(personsList);
+        System.out.println("Изначальный список людей: " + personsList);
         System.out.println("Список людей с уникальными именами." + uniqueNamesList);
 
-        String uniqueNamesString = getUniqueNamesString(personArrayList);
+        String uniqueNamesString = getUniqueNamesString(personsList);
         System.out.println("Список уникальных имен. " + uniqueNamesString);
 
-        double underagePersonsAverageAge = getUnderagePersonsAverageAge(personArrayList);
+        double underagePersonsAverageAge = getUnderagePersonsAverageAge(personsList);
         System.out.printf("Средний возраст людей младше 18 лет: %.2f%n", underagePersonsAverageAge);
 
-        Map<String, Double> averageAgesByNames = getAverageAgesByNames(personArrayList);
+        Map<String, Double> averageAgesByNames = getAverageAgesByNames(personsList);
         System.out.println("Получение списка (ключ - имена, значение - средний возраст): " + averageAgesByNames);
 
         System.out.println("Печатаем список людей возрастом от 20 до 45 лет в порядке убывания: ");
-        printPersonsFrom45To20Age(personArrayList);
+        printPersonsFrom45To20Age(personsList);
     }
 }
