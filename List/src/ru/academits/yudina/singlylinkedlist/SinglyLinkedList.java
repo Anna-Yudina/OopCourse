@@ -92,7 +92,7 @@ public class SinglyLinkedList<T> {
             return;
         }
 
-        checkIndex(index - 1);
+        checkIndex(index);
 
         Node<T> previousNode = getNode(index - 1);
         previousNode.setNext(new Node<>(data, previousNode.getNext()));

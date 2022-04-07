@@ -101,5 +101,30 @@ public class Main {
         System.out.println("Новый список: " + newList);
         System.out.println("Размер старого списка: " + myFirstList.getCount());
         System.out.println("Размер нового списка: " + newList.getCount());
+
+        System.out.println("______________________");
+        System.out.println("Проверка метода: 'void add(int index, T data)'");
+        System.out.println("Дан список: " + myFirstList);
+        myFirstList.add(0, 15);
+        System.out.println("После добавления: " + myFirstList);
+
+        try {
+            myFirstList.add(-1, 16);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println(e.getMessage());
+        }
+
+        myFirstList.add(6, 17);
+        System.out.println("После добавления: " + myFirstList);
+        System.out.println("Размер списка " + myFirstList.getCount());
+
+        try {
+            myFirstList.add(9, 18);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("После добавления: " + myFirstList);
+        System.out.println("Размер списка " + myFirstList.getCount());
     }
 }
