@@ -1,6 +1,7 @@
 package ru.academits.yudina.temperature;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class TemperatureWindow implements View {
@@ -19,82 +20,97 @@ public class TemperatureWindow implements View {
 
             JFrame frame = new JFrame("Перевод температуры");
             frame.setSize(600, 600);
+            frame.setMinimumSize(new Dimension(500, 300));
             frame.setLocationRelativeTo(null);
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-            JPanel panel = new JPanel();
-            panel.setLayout(new GridBagLayout());
-            frame.add(panel);
+            JPanel mainPanel = new JPanel(new GridBagLayout());
+            frame.add(mainPanel);
 
-            GridBagConstraints c = new GridBagConstraints();
-            c.gridx = 0;
-            c.gridy = 0;
+            Color color = new Color(100, 100, 200);
 
+            GridBagConstraints constrainsLeft = new GridBagConstraints();
+            constrainsLeft.anchor = GridBagConstraints.WEST;
+            constrainsLeft.gridy = 0;
             JLabel enterTemperatureLabel = new JLabel("Введите температуру:");
-            panel.add(enterTemperatureLabel, c);
+            enterTemperatureLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+            enterTemperatureLabel.setForeground(color); // установка цвета букв
+            enterTemperatureLabel.setBorder(new EmptyBorder(0, 5, 0, 0));
+            mainPanel.add(enterTemperatureLabel, constrainsLeft);
 
-            JTextField celsiusTemperatureField = new JTextField(10);
-            c.gridx = 1;
-            c.gridy = 0;
-            panel.add(celsiusTemperatureField, c);
+            GridBagConstraints constrainsRight = new GridBagConstraints();
+            constrainsRight.anchor = GridBagConstraints.EAST;
 
-            JLabel label1 = new JLabel("Перевести ");
-            c.gridx = 0;
-            c.gridy = 1;
-            panel.add(label1, c);
+            JTextField temperatureField = new JTextField(15);
+            temperatureField.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            constrainsRight.gridx = 1;
+            constrainsRight.gridy = 0;
+            mainPanel.add(temperatureField, constrainsRight);
 
-            String[] entriesArray = new String[]{"из шкалы Цельсия в шкалу Кельвина",
-                    "из шкалы Цельсия в шкалу Фаренгейта",
-                    "из шкалы Фаренгейта в шкалу Цельсия",
-                    "из шкалы Фаренгейта в шкалу Кельвина",
-                    "из шкалы Кельвина в шкалу Цельсия",
-                    "из шкалы Кельвина в шкалу Фаренгейта"
-            };
+            JPanel scaleFromPanel = new JPanel();
+            constrainsLeft.gridx = 0;
+            constrainsLeft.gridy = 1;
+            mainPanel.add(scaleFromPanel, constrainsLeft);
 
-            JComboBox<String> comboBox = new JComboBox<>(entriesArray);
-            c.gridx = 1;
-            c.gridy = 1;
-            panel.add(comboBox, c);
+            JLabel scaleFromLabel1 = new JLabel("Перевести из ");
+            scaleFromLabel1.setFont(new Font("Comic Sans MS", Font.BOLD, 16)); // установка шрифта
+            scaleFromLabel1.setForeground(color);
+            scaleFromPanel.add(scaleFromLabel1);
 
-            JLabel label2 = new JLabel("Результат:");
-            c.gridx = 0;
-            c.gridy = 3;
-            panel.add(label2, c);
+            String[] selectedScaleArray = temperatureConverter.getTemperaturesArray();
 
-            JLabel resultLabel = new JLabel();
+            JComboBox<String> ScaleFromComboBox = new JComboBox<>(selectedScaleArray);
+            ScaleFromComboBox.setPreferredSize(new Dimension(150, 20));
+            ScaleFromComboBox.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            scaleFromPanel.add(ScaleFromComboBox);
+
+            JLabel scaleFromLabel2 = new JLabel("в ");
+            scaleFromLabel2.setFont(new Font("Comic Sans MS", Font.BOLD, 16)); // установка шрифта
+            scaleFromLabel2.setForeground(color);
+            scaleFromPanel.add(scaleFromLabel2);
+
+            JComboBox<String> ScaleToComboBox = new JComboBox<>(selectedScaleArray);
+            constrainsRight.gridx = 1;
+            constrainsRight.gridy = 1;
+            ScaleToComboBox.setPreferredSize(new Dimension(155, 20));
+            ScaleToComboBox.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            mainPanel.add(ScaleToComboBox, constrainsRight);
+
+            JPanel resultPanel = new JPanel();
+            constrainsLeft.gridx = 1;
+            constrainsLeft.gridy = 3;
+            mainPanel.add(resultPanel, constrainsLeft);
+
+            JLabel resultLabel1 = new JLabel("Результат:");
+            resultLabel1.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            resultPanel.add(resultLabel1);
+
+            JLabel resultLabel2 = new JLabel();
+            resultLabel2.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
 
             JButton okButton = new JButton("Перевести");
+            okButton.setPreferredSize(new Dimension(155, 30));
+            okButton.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            okButton.setBackground(color);
 
             okButton.addActionListener(e -> {
                 try {
-                    double temperature = Double.parseDouble(celsiusTemperatureField.getText());
-                    int checkIndex = comboBox.getSelectedIndex();
+                    double temperature = Double.parseDouble(temperatureField.getText());
+                    String selectedValue1 = "" + ScaleFromComboBox.getSelectedItem();
+                    String selectedValue2 = "" + ScaleToComboBox.getSelectedItem();
 
-                    if (checkIndex == 0) {
-                        resultLabel.setText(temperatureConverter.convertCelsiusToKelvin(temperature));
-                    } else if (checkIndex == 1) {
-                        resultLabel.setText(temperatureConverter.convertCelsiusToFahrenheit(temperature));
-                    } else if (checkIndex == 2) {
-                        resultLabel.setText(temperatureConverter.convertFahrenheitToCelsius(temperature));
-                    } else if (checkIndex == 3) {
-                        resultLabel.setText(temperatureConverter.convertFahrenheitToKelvin(temperature));
-                    } else if (checkIndex == 4) {
-                        resultLabel.setText(temperatureConverter.convertKelvinToCelsius(temperature));
-                    } else if (checkIndex == 5) {
-                        resultLabel.setText(temperatureConverter.convertKelvinToFahrenheit(temperature));
-                    }
+                    String temperatureAfterConvert = String.format("%.2f", temperatureConverter.convertTemperature(selectedValue1, selectedValue2, temperature));
+                    resultLabel2.setText(temperatureAfterConvert);
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frame, "Температура должна быть числом", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 }
             });
 
-            c.gridx = 1;
-            c.gridy = 2;
-            panel.add(okButton, c);
+            constrainsRight.gridx = 1;
+            constrainsRight.gridy = 2;
+            mainPanel.add(okButton, constrainsRight);
 
-            c.gridx = 1;
-            c.gridy = 3;
-            panel.add(resultLabel, c);
+            resultPanel.add(resultLabel2);
 
             frame.setVisible(true);
         });
