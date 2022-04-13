@@ -92,7 +92,7 @@ public class SinglyLinkedList<T> {
             return;
         }
 
-        checkIndex(index);
+        checkIndexForAdd(index);
 
         Node<T> previousNode = getNode(index - 1);
         previousNode.setNext(new Node<>(data, previousNode.getNext()));
@@ -153,8 +153,15 @@ public class SinglyLinkedList<T> {
 
     public void checkIndex(int index) {
         if (index < 0 || index >= count) {
-            throw new IndexOutOfBoundsException("Индекс " + index + " выходит за пределы размера списка. " +
-                    "Допустимые значения должны быть в диапазоне [0, " + (count - 1) + "].");
+            throw new IndexOutOfBoundsException("Индекс " + index + "  выходит за пределы допустимых значений. " +
+                    "Индекс должен быть в диапазоне [0, " + (count - 1) + "].");
+        }
+    }
+
+    public void checkIndexForAdd(int index) {
+        if (index < 0 || index > count) {
+            throw new IndexOutOfBoundsException("Индекс " + index + " выходит за пределы допустимых значений. " +
+                    "Индекс должен быть в диапазоне [0, " + (count) + "].");
         }
     }
 

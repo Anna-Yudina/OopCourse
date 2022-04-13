@@ -114,7 +114,7 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        myFirstList.add(6, 17);
+        myFirstList.add(0, 17);
         System.out.println("После добавления: " + myFirstList);
         System.out.println("Размер списка " + myFirstList.getCount());
 
