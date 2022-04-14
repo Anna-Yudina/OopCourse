@@ -18,16 +18,16 @@ public class Main {
         list.add(9);
         list.add(10);
 
-        System.out.println("Печатаем список:" + list);
+        System.out.println("Печатаем список: " + list);
 
         System.out.println("___________________");
         int index1 = 9;
         System.out.println("Проверка метода remove(index):");
-        System.out.println("Удаляемое значение по индексу 9:" + list.remove(index1));
-        System.out.println("Список после удаления:" + list);
+        System.out.println("Удаляемое значение по индексу 9: " + list.remove(index1));
+        System.out.println("Список после удаления: " + list);
 
         System.out.println("___________________");
-        System.out.println("Длина списка:" + list.size());
+        System.out.println("Длина списка: " + list.size());
 
         System.out.println("___________________");
         int index2 = 2;
@@ -66,7 +66,7 @@ public class Main {
         int number3 = 6;
         System.out.println("Удаляем из списка " + list + " элемент со значением " + number3);
         list.remove((Object) number3);
-        System.out.println("Получаем список после удаления:" + list);
+        System.out.println("Получаем список после удаления: " + list);
 
         System.out.println("___________________");
         System.out.println("Проверка метода 'E set(int index, E element)':");
@@ -74,8 +74,8 @@ public class Main {
         int number4 = 16;
         System.out.println("Вставляем элемент по индексу " + index3 + " со значением " + number4 + " в список " + list);
         int lastValue = list.set(index3, number4);
-        System.out.println("Старое значение элемента:" + lastValue);
-        System.out.println("Список после применения метода:" + list);
+        System.out.println("Старое значение элемента: " + lastValue);
+        System.out.println("Список после применения метода: " + list);
 
         System.out.println("___________________");
         System.out.println("Проверка метода 'boolean containsAll(Collection<?> collection)':");
