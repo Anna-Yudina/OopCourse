@@ -1,19 +1,22 @@
 package ru.academits.yudina.tree;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Objects;
-import java.util.Queue;
+import java.util.*;
+import java.util.function.Consumer;
 
-public class Tree<T extends Number & Comparable<? super T>> {
+public class Tree<T> {
     private TreeNode<T> root; // корень дерева
     private int count;
+    private final Comparator<? super T> comparator;
+
+    public Tree() {
+        comparator = null;
+    }
+
+    public Tree(Comparator<? super T> comparator) {
+        this.comparator = comparator;
+    }
 
     public void add(T data) {
-        if (data == null) {
-            throw new NullPointerException("Объект равен null");
-        }
-
         if (root == null) {
             root = new TreeNode<>(data);
             count++;
@@ -22,24 +25,73 @@ public class Tree<T extends Number & Comparable<? super T>> {
 
         TreeNode<T> currentNode = root;
 
-        for (; ; ) {
-            if (currentNode.getData().compareTo(data) > 0) {
-                if (currentNode.getLeft() != null) {
-                    currentNode = currentNode.getLeft();
+        int comparatorResult; // результат компаратора -1 1 0
+
+        Comparator<? super T> cpr = comparator;
+
+        if (cpr != null) {
+            for (; ; ) {
+                comparatorResult = cpr.compare(data, currentNode.getData());
+
+                if (comparatorResult < 0) {
+                    if (currentNode.getLeft() != null) {
+                        currentNode = currentNode.getLeft();
+                    } else {
+                        currentNode.setLeft(new TreeNode<>(data));
+                        count++;
+                        return;
+                    }
                 } else {
-                    currentNode.setLeft(new TreeNode<>(data));
-                    count++;
-                    return;
-                }
-            } else {
-                if (currentNode.getRight() != null) {
-                    currentNode = currentNode.getRight();
-                } else {
-                    currentNode.setRight(new TreeNode<>(data));
-                    count++;
-                    return;
+                    if (currentNode.getRight() != null) {
+                        currentNode = currentNode.getRight();
+                    } else {
+                        currentNode.setRight(new TreeNode<>(data));
+                        count++;
+                        return;
+                    }
                 }
             }
+        } else {
+            for (; ; ) {
+                comparatorResult = myCompareTo(data, currentNode.getData());
+
+                if (comparatorResult < 0) {
+                    if (currentNode.getLeft() != null) {
+                        currentNode = currentNode.getLeft();
+                    } else {
+                        currentNode.setLeft(new TreeNode<>(data));
+                        count++;
+                        return;
+                    }
+                } else {
+                    if (currentNode.getRight() != null) {
+                        currentNode = currentNode.getRight();
+                    } else {
+                        currentNode.setRight(new TreeNode<>(data));
+                        count++;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    private int myCompareTo(T data, T currentData) {
+        Comparable<? super T> comparableData = (Comparable<? super T>) data;
+
+        if (comparableData == null && currentData == null) {
+            return 0;
+        } else if (comparableData == null && currentData != null) {
+            return -1;
+        } else if (comparableData != null && currentData == null) {
+            return 1;
+        } else {
+            if (Objects.equals(comparableData, currentData)) {
+                return 0;
+            } else if (comparableData.compareTo(currentData) > 0) {
+                return 1;
+            }
+            return -1;
         }
     }
 
@@ -48,84 +100,71 @@ public class Tree<T extends Number & Comparable<? super T>> {
         return count;
     }
 
-    // обход в ширину
-    public String toString() {
-        if (root == null) {
-            return "{}";
-        }
-
-        Queue<TreeNode<T>> queue = new LinkedList<>();
-        StringBuilder string = new StringBuilder("{");
-
-        queue.add(root);
-
-        while (!queue.isEmpty()) {
-            TreeNode<T> currentNode = queue.remove();
-            string.append(currentNode.getData()).append(", ");
-
-            if (currentNode.getLeft() != null) {
-                queue.add(currentNode.getLeft());
-            }
-
-            if (currentNode.getRight() != null) {
-                queue.add(currentNode.getRight());
-            }
-        }
-
-        string.setLength(string.length() - 2);
-        string.append("}");
-
-        return string.toString();
-    }
-
-    // поиск узла
-    public boolean search(T data) {
+    public boolean contains(T data) {
         TreeNode<T> nodeParent = getNodeParent(data);
 
         if (nodeParent == null) {
-            return root.getData().compareTo(data) == 0;
+            return myCompareTo(root.getData(), data) == 0;
         }
 
         return true;
     }
 
     public boolean remove(T data) {
-        if (data == null) {
-            throw new NullPointerException("Объект равен null");
+        if (!contains(data)) {
+            return false;
         }
 
         TreeNode<T> deletedNode;
         TreeNode<T> deletedNodeParent = getNodeParent(data);
+        int comparatorResult; // результат компаратора -1 1 0
+        Comparator<? super T> cpr = comparator;
 
         if (deletedNodeParent != null) {
-            if (deletedNodeParent.getLeft().getData().compareTo(data) == 0) {
+            if (cpr != null) {
+                comparatorResult = cpr.compare(deletedNodeParent.getLeft().getData(), data);
+            } else {
+                comparatorResult = myCompareTo(deletedNodeParent.getLeft().getData(), data);
+            }
+
+            if (comparatorResult == 0) {
                 deletedNode = deletedNodeParent.getLeft();
             } else {
                 deletedNode = deletedNodeParent.getRight();
             }
         } else {
-            if (root.getData().compareTo(data) == 0) {
+            if (cpr != null) {
+                comparatorResult = cpr.compare(root.getData(), data);
+            } else {
+                comparatorResult = myCompareTo(root.getData(), data);
+            }
+
+            if (comparatorResult == 0) {
                 removeNode(root, null);
                 return true;
-            } else {
-                return false;
             }
+            return false;
         }
 
         if (deletedNode == null) {
             return false;
         }
 
+        if (cpr != null) {
+            comparatorResult = cpr.compare(deletedNodeParent.getData(), data);
+        } else {
+            comparatorResult = myCompareTo(deletedNodeParent.getData(), data);
+        }
 
         if (deletedNode.getLeft() == null) {
             if (deletedNode.getRight() == null) {
-                if (deletedNodeParent.getData().compareTo(data) > 0) {
+                if (comparatorResult > 0) {
                     deletedNodeParent.setLeft(null);
                 } else {
                     deletedNodeParent.setRight(null);
                 }
             } else {
-                if (deletedNodeParent.getData().compareTo(data) > 0) {
+                if (comparatorResult > 0) {
                     deletedNodeParent.setLeft(deletedNode.getRight());
                 } else {
                     deletedNodeParent.setRight(deletedNode.getRight());
@@ -137,7 +176,7 @@ public class Tree<T extends Number & Comparable<? super T>> {
             return true;
         } else {
             if (deletedNode.getRight() == null) {
-                if (deletedNodeParent.getData().compareTo(data) > 0) {
+                if (comparatorResult > 0) {
                     deletedNodeParent.setLeft(deletedNode.getLeft());
                 } else {
                     deletedNodeParent.setRight(deletedNode.getLeft());
@@ -170,8 +209,17 @@ public class Tree<T extends Number & Comparable<? super T>> {
         TreeNode<T> leftChildDeleteNode = deletedNode.getLeft();
         TreeNode<T> rightChildDeleteNode = deletedNode.getRight();
 
+        int comparatorResult; // результат компаратора -1 1 0
+        Comparator<? super T> cpr = comparator;
+
         if (deletedNodeParent != null) {
-            if (deletedNodeParent.getData().compareTo(minNode.getData()) > 0) {
+            if (cpr != null) {
+                comparatorResult = cpr.compare(deletedNodeParent.getData(), minNode.getData());
+            } else {
+                comparatorResult = myCompareTo(deletedNodeParent.getData(), minNode.getData());
+            }
+
+            if (comparatorResult > 0) {
                 deletedNodeParent.setLeft(minNode);
             } else {
                 deletedNodeParent.setRight(minNode);
@@ -189,32 +237,59 @@ public class Tree<T extends Number & Comparable<? super T>> {
     }
 
     private TreeNode<T> getNodeParent(T data) {
-        if (data == null) {
-            throw new NullPointerException("Объект равен null");
-        }
-
         TreeNode<T> node = root;
         TreeNode<T> nodeParent = null;
 
-        for (; ; ) {
-            if (node.getData().compareTo(data) == 0) {
-                return nodeParent;
-            }
+        int comparatorResult; // результат компаратора -1 1 0
+        Comparator<? super T> cpr = comparator;
 
-            if (node.getData().compareTo(data) > 0) {
-                if (node.getLeft() != null) {
-                    nodeParent = node;
-                    node = node.getLeft();
-                    continue;
-                } else {
+        if (cpr != null) {
+            for (; ; ) {
+                comparatorResult = cpr.compare(node.getData(), data);
+
+                if (comparatorResult == 0) {
+                    return nodeParent;
+                }
+
+                if (comparatorResult > 0) {
+                    if (node.getLeft() != null) {
+                        nodeParent = node;
+                        node = node.getLeft();
+                        continue;
+                    }
                     return null;
                 }
-            }
 
-            if (node.getRight() != null) {
-                nodeParent = node;
-                node = node.getRight();
-            } else {
+                if (node.getRight() != null) {
+                    nodeParent = node;
+                    node = node.getRight();
+                }
+
+                return null;
+            }
+        } else {
+            for (; ; ) {
+                comparatorResult = myCompareTo(node.getData(), data);
+
+                if (comparatorResult == 0) {
+                    return nodeParent;
+                }
+
+                if (comparatorResult > 0) {
+                    if (node.getLeft() != null) {
+                        nodeParent = node;
+                        node = node.getLeft();
+                        continue;
+                    }
+
+                    return null;
+                }
+
+                if (node.getRight() != null) {
+                    nodeParent = node;
+                    node = node.getRight();
+                }
+
                 return null;
             }
         }
@@ -237,38 +312,37 @@ public class Tree<T extends Number & Comparable<? super T>> {
     }
 
     // обход в глубину с рекурсией
-    private void printTreeRecursion(TreeNode<T> node) {
+    private void depthTraversalRecursionInner(TreeNode<T> node, Consumer<T> consumer) {
         if (node == null) {
             return;
         }
 
-        System.out.print(node + " ");
+        consumer.accept(node.getData());
 
         TreeNode<T> leftChild = node.getLeft();
-        printTreeRecursion(leftChild);
+        depthTraversalRecursionInner(leftChild, consumer);
 
         TreeNode<T> rightChild = node.getRight();
-        printTreeRecursion(rightChild);
+        depthTraversalRecursionInner(rightChild, consumer);
     }
 
-    public void printTree() {
-        printTreeRecursion(root);
+    public void depthTraversalRecursion(Consumer<T> consumer) {
+        depthTraversalRecursionInner(root, consumer);
         System.out.println();
     }
 
     // обход в глубину без рекурсии
-    public Object[] toArray() {
+    public void depthTraversalNoRecursion(Consumer<T> consumer) {
+        if (root == null) {
+            return;
+        }
+
         Deque<TreeNode<T>> stack = new LinkedList<>();
-        Object[] array = new Object[count];
-
         stack.addLast(root);
-
-        int i = 0;
 
         while (!stack.isEmpty()) {
             TreeNode<T> deletedNode = stack.removeLast();
-            array[i] = deletedNode.getData();
-            i++;
+            consumer.accept(deletedNode.getData());
 
             if (deletedNode.getRight() != null) {
                 stack.addLast(deletedNode.getRight());
@@ -278,7 +352,48 @@ public class Tree<T extends Number & Comparable<? super T>> {
                 stack.addLast(deletedNode.getLeft());
             }
         }
+    }
 
-        return array;
+    // обход в ширину
+    public void breadthTraversal(Consumer<T> consumer) {
+        if (root == null) {
+            return;
+        }
+
+        Queue<TreeNode<T>> queue = new LinkedList<>();
+
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode<T> currentNode = queue.remove();
+            consumer.accept(currentNode.getData());
+
+            if (currentNode.getLeft() != null) {
+                queue.add(currentNode.getLeft());
+            }
+
+            if (currentNode.getRight() != null) {
+                queue.add(currentNode.getRight());
+            }
+        }
+    }
+
+    // метод сделан для тренировки
+    public String toString() {
+        if (root == null) {
+            return "{}";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("{");
+
+        Consumer<T> consumer = x -> stringBuilder.append(x).append(", ");
+        breadthTraversal(consumer);
+
+        stringBuilder.setLength(stringBuilder.length() - 2);
+        stringBuilder.append("}");
+
+        return stringBuilder.toString();
     }
 }

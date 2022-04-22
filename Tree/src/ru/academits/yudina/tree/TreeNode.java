@@ -1,17 +1,14 @@
 package ru.academits.yudina.tree;
 
-class TreeNode<T extends Number> {
+import java.util.Comparator;
+import java.util.TreeMap;
+
+class TreeNode<T> {
     private TreeNode<T> left; // левый сын
     private TreeNode<T> right; // правый сын
-    private T data; // полезные данные
+    private final T data; // полезные данные
 
     public TreeNode(T data) {
-        this.data = data;
-    }
-
-    public TreeNode(TreeNode<T> left, TreeNode<T> right, T data) {
-        this.left = left;
-        this.right = right;
         this.data = data;
     }
 
@@ -34,14 +31,4 @@ class TreeNode<T extends Number> {
     public T getData() {
         return data;
     }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return  "" + data;
-    }
 }
-
