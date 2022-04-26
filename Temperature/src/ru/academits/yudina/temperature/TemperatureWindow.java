@@ -3,6 +3,8 @@ package ru.academits.yudina.temperature;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TemperatureWindow implements View {
     private final TemperatureConverter temperatureConverter;
@@ -57,9 +59,9 @@ public class TemperatureWindow implements View {
             scaleFromLabel1.setForeground(color);
             scaleFromPanel.add(scaleFromLabel1);
 
-            String[] selectedScaleArray = temperatureConverter.getTemperaturesArray();
+            Object[] selectedScales = TemperatureConverter.SCALES.toArray();
 
-            JComboBox<String> ScaleFromComboBox = new JComboBox<>(selectedScaleArray);
+            JComboBox<Object> ScaleFromComboBox = new JComboBox<>(selectedScales);
             ScaleFromComboBox.setPreferredSize(new Dimension(150, 20));
             ScaleFromComboBox.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
             scaleFromPanel.add(ScaleFromComboBox);
@@ -69,7 +71,7 @@ public class TemperatureWindow implements View {
             scaleFromLabel2.setForeground(color);
             scaleFromPanel.add(scaleFromLabel2);
 
-            JComboBox<String> ScaleToComboBox = new JComboBox<>(selectedScaleArray);
+            JComboBox<Object> ScaleToComboBox = new JComboBox<>(selectedScales);
             constrainsRight.gridx = 1;
             constrainsRight.gridy = 1;
             ScaleToComboBox.setPreferredSize(new Dimension(155, 20));
@@ -96,10 +98,10 @@ public class TemperatureWindow implements View {
             okButton.addActionListener(e -> {
                 try {
                     double temperature = Double.parseDouble(temperatureField.getText());
-                    String selectedValue1 = "" + ScaleFromComboBox.getSelectedItem();
-                    String selectedValue2 = "" + ScaleToComboBox.getSelectedItem();
+                    Scale selectedScale1 = (Scale) ScaleFromComboBox.getSelectedItem();
+                    Scale selectedScale2 = (Scale) ScaleToComboBox.getSelectedItem();
 
-                    String temperatureAfterConvert = String.format("%.2f", temperatureConverter.convertTemperature(selectedValue1, selectedValue2, temperature));
+                    String temperatureAfterConvert = String.format("%.2f", temperatureConverter.convertTemperature(selectedScale1, selectedScale2, temperature));
                     resultLabel2.setText(temperatureAfterConvert);
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frame, "Температура должна быть числом", "Ошибка", JOptionPane.ERROR_MESSAGE);
