@@ -144,8 +144,8 @@ public class MyArrayList<E> implements List<E> {
         System.arraycopy(items, index, items, inputCollectionSize + index, size - index);
         size += inputCollectionSize;
 
-        for (E item : collection){
-            set(index, item);
+        for (E item : collection) {
+            items[index] = item;
             index++;
         }
 
@@ -154,50 +154,50 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean removeAll(Collection<?> collection) {
-        boolean isChange = false;
-
         if (collection.size() == 0) {
             return false;
         }
+
+        boolean isChanged = false;
 
         for (int i = 0; i < size; i++) {
             if (collection.contains(items[i])) {
                 remove(i);
                 i--;
-                size--;
-                isChange = true;
+                isChanged = true;
             }
         }
 
-        return isChange;
+        return isChanged;
     }
 
     @Override
     public boolean retainAll(Collection<?> collection) {
-        boolean isChange = false;
+        boolean isChanged = false;
 
         for (int i = 0; i < size; i++) {
             if (!collection.contains(items[i])) {
                 remove(i);
                 i--;
-                size--;
-                isChange = true;
+                isChanged = true;
             }
         }
 
-        return isChange;
+        return isChanged;
     }
 
     @Override
     public void clear() {
-        if (size != 0) {
-            for (int i = 0; i < size; i++) {
-                items[i] = null;
-            }
-
-            size = 0;
-            modCount++;
+        if (size == 0) {
+            return;
         }
+
+        for (int i = 0; i < size; i++) {
+            items[i] = null;
+        }
+
+        size = 0;
+        modCount++;
     }
 
     @Override
@@ -281,9 +281,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     private void increaseCapacity() {
-        int currentCapacity = items.length;
-
-        if (currentCapacity > 0) {
+        if (items.length > 0) {
             items = Arrays.copyOf(items, items.length * 2);
         } else {
             //noinspection unchecked

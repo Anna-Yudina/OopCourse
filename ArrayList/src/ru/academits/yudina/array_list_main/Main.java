@@ -149,6 +149,7 @@ public class Main {
         System.out.println("Удалили второй список из первого списка:");
         numberList3.removeAll(numberList4);
         System.out.println(numberList3);
+        System.out.println("Размер списка: " + numberList3.size());
 
         System.out.println("______________");
         System.out.println("Проверка метода 'boolean retainAll(Collection<?> collection)':");
@@ -158,6 +159,7 @@ public class Main {
         System.out.println("Даны 2 списка: " + numberList3 + "; " + numberList4);
         numberList3.retainAll(numberList4);
         System.out.println("Результат работы метода: " + numberList3);
+        System.out.println("Размер списка: " + numberList3.size());
 
         System.out.println("______________");
         System.out.println("Проверка итератора:");
