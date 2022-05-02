@@ -1,6 +1,7 @@
 package ru.academits.yudina.hash_table_main;
 
 import ru.academits.yudina.hash_table.MyHashTable;
+
 import java.util.*;
 
 public class Main {
@@ -19,7 +20,7 @@ public class Main {
         arrayList.add(15);
         arrayList.add(16);
         arrayList.add(17);
-        arrayList.add(18);
+        arrayList.add(11);
 
         System.out.println("создана вторая таблица " + Arrays.toString(arrayList.toArray()) + " размерности " + arrayList.size());
 
@@ -42,27 +43,7 @@ public class Main {
         String massage2 = numbers1.containsAll(arrayList) ? "да, содержит" : "нет, не содержит";
         System.out.println(massage2);
 
-        System.out.println("__________________________");
-        System.out.println("Проверка Итератора");
-        MyHashTable<Integer> myHashTable1 = new MyHashTable<>();
-        myHashTable1.add(1);
-        myHashTable1.add(5);
-        myHashTable1.add(5);
-        myHashTable1.add(9);
-        System.out.println("Создали новую таблицу : " + Arrays.toString(myHashTable1.toArray()));
-        System.out.println("После обхода итератором: ");
-
-        for (Integer number : myHashTable1) {
-            System.out.print(number + " ");
-        }
-
-        System.out.println("__________________________");
-        System.out.println("Проверка метода 'boolean retainAll(Collection<?> collection)'");
-        System.out.println("Даны 2 таблицы: " + Arrays.toString(numbers1.toArray()) + " и " + Arrays.toString(arrayList.toArray()));
-        numbers1.retainAll(arrayList);
-        System.out.println("Получившаяся таблица после запуска метода: " + Arrays.toString(numbers1.toArray()));
-
-        System.out.println("_________________________");
+        System.out.println(System.lineSeparator() + "_________________________");
         System.out.println("Проверка метода 'boolean addAll(Collection<? extends E> collection)'");
         MyHashTable<Integer> numbers2 = new MyHashTable<>();
         numbers2.add(15);
@@ -82,7 +63,7 @@ public class Main {
         System.out.println(System.lineSeparator() + "__________________________");
         System.out.println("Проверка метода '<T> T[] toArray(T[] array) '");
         Integer[] numbersArray = new Integer[9];
-        Integer[] resultNumbersArray = myHashTable1.toArray(numbersArray);
+        Integer[] resultNumbersArray = numbers1.toArray(numbersArray);
         System.out.println(Arrays.toString(resultNumbersArray));
 
         System.out.println("__________________________");
@@ -113,6 +94,47 @@ public class Main {
                 " элементы второй таблицы " + Arrays.toString(numbers4.toArray()));
         numbers3.removeAll(numbers4);
         System.out.println("Получаем результат: " + Arrays.toString(numbers3.toArray()));
+        System.out.println("Размер таблицы: " + numbers3.size());
 
+        System.out.println("__________________________");
+        System.out.println("Проверка метода 'boolean retainAll(Collection<?> collection)'");
+        System.out.println("Даны 2 таблицы: " + Arrays.toString(numbers1.toArray()) + " и " + Arrays.toString(arrayList.toArray()));
+        numbers1.retainAll(arrayList);
+        System.out.println("Получившаяся таблица после запуска метода: " + Arrays.toString(numbers1.toArray()));
+        MyHashTable<Integer> numbers5 = new MyHashTable<>(10);
+        numbers1.retainAll(numbers5);
+        System.out.println("Получившаяся таблица после запуска метода: " + Arrays.toString(numbers1.toArray()));
+
+        System.out.println("__________________________");
+        System.out.println("Проверка Итератора");
+        MyHashTable<Integer> myHashTable1 = new MyHashTable<>();
+        myHashTable1.add(1);
+        myHashTable1.add(5);
+        myHashTable1.add(5);
+        myHashTable1.add(9);
+        System.out.println("Создали новую таблицу : " + Arrays.toString(myHashTable1.toArray()));
+        System.out.println("После обхода итератором: ");
+
+        for (Integer number : myHashTable1) {
+            System.out.print(number + " ");
+        }
+
+        myHashTable1.add(10);
+        myHashTable1.add(7);
+        myHashTable1.remove(5);
+        myHashTable1.remove(1);
+        myHashTable1.add(7);
+        myHashTable1.add(7);
+        myHashTable1.add(7);
+        myHashTable1.add(7);
+        myHashTable1.add(7);
+        myHashTable1.remove(7);
+        myHashTable1.remove(7);
+
+        System.out.println("После второго обхода итератором: ");
+
+        for (Integer number : myHashTable1) {
+            System.out.print(number + " ");
+        }
     }
 }

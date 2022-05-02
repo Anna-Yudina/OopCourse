@@ -14,8 +14,8 @@ public class MyHashTable<E> implements Collection<E> {
     }
 
     public MyHashTable(int initialCapacity) {
-        if (initialCapacity < 0) {
-            throw new IllegalArgumentException("Введенный размер списка " + initialCapacity + " должен быть > 0");
+        if (initialCapacity <= 0) {
+            throw new IllegalArgumentException("Введенная длина массива " + initialCapacity + " должна быть > 0");
         }
 
         //noinspection unchecked
@@ -37,13 +37,9 @@ public class MyHashTable<E> implements Collection<E> {
         Object[] objects = new Object[size];
         int i = 0;
 
-        for (ArrayList<E> list : lists) {
-            if (list != null) {
-                for (E item : list) {
-                    objects[i] = item;
-                    i++;
-                }
-            }
+        for (E item : this) {
+            objects[i] = item;
+            i++;
         }
 
         return objects;
@@ -56,13 +52,13 @@ public class MyHashTable<E> implements Collection<E> {
             return (T[]) Arrays.copyOf(toArray(), size, array.getClass());
         }
 
-        //noinspection unchecked
-        T[] result = (T[]) Arrays.copyOf(toArray(), array.length, array.getClass());
+        System.arraycopy(toArray(), 0, array, 0, size);
 
-        if (array.length > size)
+        if (array.length > size) {
             array[size] = null;
+        }
 
-        return result;
+        return array;
     }
 
     @Override
@@ -87,11 +83,8 @@ public class MyHashTable<E> implements Collection<E> {
             return false;
         }
 
-        boolean isRemoved = lists[index].remove(object);
-
-        if (isRemoved){
-            if (lists[index].size() == 0){
-                lists[index].clear();
+        if (lists[index].remove(object)) {
+            if (lists[index].size() == 0) {
                 lists[index] = null;
             }
 
@@ -113,44 +106,55 @@ public class MyHashTable<E> implements Collection<E> {
             add(item);
         }
 
-        modCount++;
         return true;
     }
 
     @Override
     public boolean removeAll(Collection<?> collection) {
         if (collection.isEmpty()) {
-            return true;
+            return false;
         }
 
         boolean isDeleted = false;
+        int i = 0;
 
         for (ArrayList<E> list : lists) {
             if (list != null) {
                 int sizeBefore = list.size();
 
-                if (list.removeAll(collection)){
-                 isDeleted = true;
-                }
+                if (list.removeAll(collection)) {
+                    isDeleted = true;
+                    int sizeAfter = list.size();
+                    size -= (sizeBefore - sizeAfter);
 
-                int sizeAfter = list.size();
-                size -= (sizeBefore - sizeAfter);
-                modCount++;
+                    if (list.size() == 0) {
+                        lists[i] = null;
+                    }
+                }
             }
+
+            i++;
         }
+
+        modCount++;
 
         return isDeleted;
     }
 
     @Override
     public void clear() {
+        if (lists == null) {
+            return;
+        }
+
         Arrays.fill(lists, null);
         size = 0;
+        modCount++;
     }
 
     private int getIndex(Object object) {
-        if (object == null){
-        return 0;
+        if (object == null) {
+            return 0;
         }
 
         return Math.abs(object.hashCode() % lists.length);
@@ -169,10 +173,6 @@ public class MyHashTable<E> implements Collection<E> {
 
     @Override
     public boolean containsAll(Collection<?> collection) {
-        if (collection.isEmpty()) {
-            return true;
-        }
-
         for (Object item : collection) {
             if (!contains(item)) {
                 return false;
@@ -185,9 +185,14 @@ public class MyHashTable<E> implements Collection<E> {
     @Override
     public boolean retainAll(Collection<?> collection) {
         if (collection.isEmpty()) {
+            if (lists == null) {
+                return false;
+            }
+
+            clear();
             return true;
         }
-        
+
         boolean isDeleted = false;
 
         for (ArrayList<E> list : lists) {
@@ -196,13 +201,13 @@ public class MyHashTable<E> implements Collection<E> {
 
                 if (list.retainAll(collection)) {
                     isDeleted = true;
+                    int sizeAfter = list.size();
+                    size -= (sizeBefore - sizeAfter);
                 }
-
-                int sizeAfter = list.size();
-                size -= (sizeBefore - sizeAfter);
-                modCount++;
             }
         }
+
+        modCount++;
 
         return isDeleted;
     }
@@ -219,7 +224,7 @@ public class MyHashTable<E> implements Collection<E> {
         private final int expectedModCount = modCount;
 
         public boolean hasNext() {
-            return arrayIndex <= lists.length && count < size;
+            return size > count;
         }
 
         public E next() {
@@ -227,22 +232,21 @@ public class MyHashTable<E> implements Collection<E> {
                 throw new NoSuchElementException("В перечислении больше нет элементов.");
             }
 
-            while (lists[arrayIndex] == null) {
+            if (modCount != expectedModCount) {
+                throw new ConcurrentModificationException("Коллекция изменилась в процессе прохода по коллекции.");
+            }
+
+            while (lists[arrayIndex] == null || lists[arrayIndex].size() == 0) {
                 arrayIndex++;
             }
 
-            ArrayList<E> arrayList = lists[arrayIndex];
-            E currentData = arrayList.get(listIndex);
+            E currentData = lists[arrayIndex].get(listIndex);
             listIndex++;
             count++;
 
-            if (listIndex == arrayList.size()) {
+            if (listIndex == lists[arrayIndex].size()) {
                 arrayIndex++;
                 listIndex = 0;
-            }
-
-            if (modCount != expectedModCount) {
-                throw new ConcurrentModificationException("Коллекция изменилась в процессе прохода по коллекции.");
             }
 
             return currentData;
