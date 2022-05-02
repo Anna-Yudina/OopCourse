@@ -144,9 +144,11 @@ public class MyArrayList<E> implements List<E> {
         System.arraycopy(items, index, items, inputCollectionSize + index, size - index);
         size += inputCollectionSize;
 
+        int i = index;
+
         for (E item : collection) {
-            items[index] = item;
-            index++;
+            items[i] = item;
+            i++;
         }
 
         return true;
