@@ -4,12 +4,12 @@ public class KelvinScale implements Scale {
     private String kelvinStribg = "Кельвин";
 
     @Override
-    public double convertToCelcius(double temperature) {
+    public double convertToCelsius(double temperature) {
         return temperature - 273.15;
     }
 
     @Override
-    public double convertFromCelcius(double temperature) {
+    public double convertFromCelsius(double temperature) {
         return temperature + 273.15;
     }
 

@@ -1,7 +1,7 @@
 package ru.academits.yudina.temperature;
 
 public interface Scale {
-    public double convertToCelcius(double temperature);
+    public double convertToCelsius(double temperature);
 
-    public double convertFromCelcius(double temperature);
+    public double convertFromCelsius(double temperature);
 }
