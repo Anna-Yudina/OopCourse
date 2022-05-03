@@ -9,6 +9,5 @@ public class Main {
         TemperatureConverter temperatureConverter = new TemperatureConverter();
         View view = new TemperatureWindow(temperatureConverter);
         view.start();
-        int helllo = 5;
     }
 }
