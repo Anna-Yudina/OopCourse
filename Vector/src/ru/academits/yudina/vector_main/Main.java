@@ -2,6 +2,8 @@ package ru.academits.yudina.vector_main;
 
 import ru.academits.yudina.vector.Vector;
 
+import java.util.TreeSet;
+
 public class Main {
     public static void main(String[] args) {
         double[] array1 = new double[]{2, 4, 7, 15, 8, 1, 6};

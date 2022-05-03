@@ -2,11 +2,8 @@ package ru.academits.yudina.tree_main;
 
 import ru.academits.yudina.tree.Tree;
 
-import javax.naming.InsufficientResourcesException;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
-import java.util.TreeSet;
 import java.util.function.Consumer;
 
 public class Main {
@@ -28,9 +25,9 @@ public class Main {
         Consumer<Integer> consumer = x -> System.out.print(x + " ");
         numbers1.depthTraversalRecursion(consumer);
 
-        System.out.println("____________________");
+        System.out.println(System.lineSeparator() + "____________________");
         System.out.println("Распечатаем дерево с помощью обхода в глубину без рекурсии:");
-        numbers1.depthTraversalNoRecursion(consumer);
+        numbers1.depthTraversal(consumer);
 
         System.out.println(System.lineSeparator() + "____________________");
         System.out.println("Распечатаем дерево с помощью обхода в ширину:");
@@ -46,14 +43,9 @@ public class Main {
                 return -1;
             } else if (number1 != null && number2 == null) {
                 return 1;
-            } else {
-                if (Objects.equals(number1, number2)) {
-                    return 0;
-                } else if (number1.compareTo(number2) > 0) {
-                    return 1;
-                }
-                return -1;
             }
+
+            return number1.compareTo(number2);
         };
 
         Tree<Integer> numbers2 = new Tree<>(comparator);
@@ -70,7 +62,7 @@ public class Main {
         numbers2.add(null);
         numbers2.depthTraversalRecursion(consumer);
 
-        System.out.println("________________");
+        System.out.println(System.lineSeparator() + "________________");
         System.out.println("Создадим пустое дерево:");
         Tree<Integer> numbers3 = new Tree<>();
         numbers3.depthTraversalRecursion(consumer);
@@ -84,9 +76,8 @@ public class Main {
         System.out.println("число элементов после удаления: " + numbers1.getCount());
 
         System.out.println("_____________________");
-        System.out.println("число элементов до удаления: " + numbers1.getCount());
-        System.out.println("Удалим лист дерева: " + 2);
-        numbers1.remove(2);
+        System.out.println("Удалим лист дерева: " + 4);
+        numbers1.remove(4);
         System.out.println("Дерево после удаления: " + numbers1);
         System.out.println("число элементов после удаления: " + numbers1.getCount());
 
