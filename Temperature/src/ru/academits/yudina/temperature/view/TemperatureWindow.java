@@ -1,10 +1,11 @@
-package ru.academits.yudina.temperature;
+package ru.academits.yudina.temperature.view;
+
+import ru.academits.yudina.temperature.model.Scale;
+import ru.academits.yudina.temperature.model.TemperatureConverter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TemperatureWindow implements View {
     private final TemperatureConverter temperatureConverter;
@@ -98,10 +99,10 @@ public class TemperatureWindow implements View {
             okButton.addActionListener(e -> {
                 try {
                     double temperature = Double.parseDouble(temperatureField.getText());
-                    Scale selectedScale1 = (Scale) ScaleFromComboBox.getSelectedItem();
-                    Scale selectedScale2 = (Scale) ScaleToComboBox.getSelectedItem();
+                    Scale inputSelectedScale = (Scale) ScaleFromComboBox.getSelectedItem();
+                    Scale outputSelectedScale = (Scale) ScaleToComboBox.getSelectedItem();
 
-                    String temperatureAfterConvert = String.format("%.2f", temperatureConverter.convertTemperature(selectedScale1, selectedScale2, temperature));
+                    String temperatureAfterConvert = String.format("%.2f", temperatureConverter.convertTemperature(inputSelectedScale, outputSelectedScale, temperature));
                     resultLabel2.setText(temperatureAfterConvert);
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frame, "Температура должна быть числом", "Ошибка", JOptionPane.ERROR_MESSAGE);

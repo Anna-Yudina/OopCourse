@@ -1,7 +1,7 @@
-package ru.academits.yudina.temperature;
+package ru.academits.yudina.temperature.model;
 
 public class KelvinScale implements Scale {
-    private String kelvinString = "Кельвин";
+    public static String kelvinString = "Кельвин";
 
     @Override
     public double convertToCelsius(double temperature) {
@@ -15,6 +15,6 @@ public class KelvinScale implements Scale {
 
     @Override
     public String toString() {
-        return kelvinString;
+        return "Кельвин";
     }
 }

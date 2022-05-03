@@ -1,7 +1,7 @@
-package ru.academits.yudina.temperature;
+package ru.academits.yudina.temperature.model;
 
 public class FahrenheitScale implements Scale {
-    private String fahrenheitString = "Фаренгейт";
+    public static String fahrenheitString = "Фаренгейт";
 
     @Override
     public double convertToCelsius(double temperature) {
@@ -15,6 +15,6 @@ public class FahrenheitScale implements Scale {
 
     @Override
     public String toString() {
-        return fahrenheitString;
+        return "Фаренгейт";
     }
 }
