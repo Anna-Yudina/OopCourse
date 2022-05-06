@@ -68,14 +68,6 @@ public class Main {
         matrix2.setVectorLine(1, vector3);
         System.out.println("Матрица после вставки вектора по индексу 1: " + matrix2);
 
-        System.out.println("_______________");
-        System.out.println("Проверяем метод Vector multiplyMatrixAndVector(Vector vector):");
-        Vector vector4 = new Vector(new double[]{2, 3, 4, 6});
-        System.out.println("Матрица: " + matrix2);
-        System.out.println("Вектор: " + vector4);
-        Vector vector5 = matrix2.multiplyMatrixAndVector(vector4);
-        System.out.println("Результат перемножения матрицы на вектор: " + vector5);
-
         System.out.println("___________________");
         System.out.println("Проверка метода transpose():");
         System.out.println("Транспонируем матрицу: " + matrix2);
@@ -126,8 +118,48 @@ public class Main {
         Matrix resultMatrix2 = Matrix.getDifference(matrix3, matrix6);
         System.out.println("Результат вычитания: " + resultMatrix2);
 
-        double [][] twoDimArray = {{5,7,3}, {7,0}, {8,1,2,3}};
+        double [][] twoDimArray = {{5,7}, {7,0}, {8,1,2,3}};
         System.out.println(Arrays.deepToString(twoDimArray));
         Matrix matrix7 = new Matrix(twoDimArray);
+        System.out.println(matrix7);
+
+        System.out.println("_______________");
+        System.out.println("Проверяем конструктор Matrix(Vector[] vectors)");
+        Vector[] vectors = new Vector[3];
+        double[] array1 = new double[]{2, 4, 7, 15, 8, 1, 6};
+        double[] array2 = new double[]{1, 2, 3, 4};
+        double[] array3 = new double[]{3, 4, 5};
+        vectors[0] = new Vector(array1);
+        vectors[1] = new Vector(array2);
+        vectors[2] = new Vector(array3);
+
+        Matrix matrix8 = new Matrix(vectors);
+        System.out.println(matrix8);
+
+        System.out.println("_______________");
+        System.out.println("Проверяем метод Matrix getMultiply(Matrix matrix1, Matrix matrix2)");
+        double[][] dimension3 = {
+                {1, 2, 3, 4},
+                {4, 3, 2, 1}
+        };
+        double[][] dimension4 = {
+                {2, 4},
+                {6, 4},
+                {2, 4},
+                {6, 4}
+        };
+
+        Matrix matrix9 = new Matrix(dimension3);
+        Matrix matrix10 = new Matrix(dimension4);
+        Matrix resultMatrix = Matrix.getMultiply(matrix9,matrix10);
+        System.out.println(resultMatrix);
+
+        System.out.println("_______________");
+        System.out.println("Проверяем метод Vector multiplyMatrixAndVector(Vector vector):");
+        Vector vector4 = new Vector(new double[]{2, 6, 2, 1});
+        System.out.println("Матрица: " + matrix9);
+        System.out.println("Вектор: " + vector4);
+        Vector vector5 = matrix9.multiplyMatrixAndVector(vector4);
+        System.out.println("Результат перемножения матрицы на вектор: " + vector5);
     }
 }

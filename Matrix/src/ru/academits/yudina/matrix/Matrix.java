@@ -18,12 +18,26 @@ public class Matrix {
     }
 
     public Matrix(double[][] dimension) {
-        //TODO добить матрицу нулями
+        if (dimension.length == 0) {
+            throw new IllegalArgumentException("Размер введенного двумерного массива должен быть > 0");
+        }
+
+        int column = 0;
+
+        for (double[] doubles : dimension) {
+            if (doubles.length > column) {
+                column = doubles.length;
+            }
+        }
 
         vectors = new Vector[dimension.length];
 
         for (int i = 0; i < dimension.length; i++) {
-            vectors[i] = new Vector(dimension[i]);
+            vectors[i] = new Vector(column);
+
+            for (int j = 0; j < dimension[i].length; j++) {
+                vectors[i].setElement(j, dimension[i][j]);
+            }
         }
     }
 
@@ -33,9 +47,27 @@ public class Matrix {
     }
 
     public Matrix(Vector[] vectors) {
-        //TODO добить матрицу нулями
+        if (vectors.length == 0) {
+            throw new IllegalArgumentException("Размер введенного массива векторов должен быть > 0");
+        }
 
-        this.vectors = vectors;
+        int column = 0;
+
+        for (Vector vector : vectors) {
+            if (vector.getSize() > column) {
+                column = vector.getSize();
+            }
+        }
+
+        this.vectors = new Vector[vectors.length];
+
+        for (int i = 0; i < vectors.length; i++) {
+            this.vectors[i] = new Vector(column);
+
+            for (int j = 0; j < vectors[i].getSize(); j++) {
+                this.vectors[i].setElement(j, vectors[i].getElement(j));
+            }
+        }
     }
 
     // получение размеров матрицы
@@ -83,7 +115,8 @@ public class Matrix {
             transposeMatrix.setVectorLine(i, vector);
         }
 
-        return transposeMatrix;
+        this.vectors = transposeMatrix.vectors;
+        return this;
     }
 
     // умножение на скаляр
@@ -93,14 +126,12 @@ public class Matrix {
         }
     }
 
-    // вычисление определителя матрицы
-    // TODO создать метод
-
     // умножение матрицы на вектор
     public Vector multiplyMatrixAndVector(Vector vector) {
-        // TODO дописать, если передали нулевой вектор
+        if (vectors[0].getSize() != vector.getSize()) {
+            throw new IllegalArgumentException("Размер вектора должен быть = " + vectors[0].getSize());
+        }
 
-        // TODO дописать условие, если количество столбцов матрицы не равно количеству элементов в векторе
         Vector newVector = new Vector(vectors.length);
 
         for (int i = 0; i < vectors.length; i++) {
@@ -215,9 +246,19 @@ public class Matrix {
     }
 
     public static Matrix getMultiply(Matrix matrix1, Matrix matrix2) {
-        // TODO добавить условие
-        Matrix resultMatrix = new Matrix(matrix1);
-        // TODO написать цикл, используя метод умножения матрицы на вектор
-        return resultMatrix;
+        if (matrix1.vectors[0].getSize() != matrix2.vectors.length) {
+            throw new IllegalArgumentException("Число столбцов первой матрицы должно быть равно числу столбцов второй матрицы");
+        }
+
+        Matrix resultMatrix = new Matrix(matrix2.vectors[0].getSize(), matrix1.vectors.length);
+
+        for (int i = 0; i < matrix2.vectors[0].getSize(); i++) {
+            resultMatrix.vectors[i] = matrix1.multiplyMatrixAndVector(matrix2.getVectorColumn(i));
+        }
+
+        return resultMatrix.transpose();
     }
+    
+    // вычисление определителя матрицы
+    // TODO создать метод
 }
