@@ -189,7 +189,6 @@ public class Matrix {
         Matrix increasedMatrix = new Matrix(line, column);
 
         for (int i = 0; i < vectors.length; i++) {
-            increasedMatrix.vectors[i] = new Vector(column);
             double[] numbers = new double[column];
 
             for (int j = 0; j < vectors[0].getSize(); j++) {
@@ -258,7 +257,51 @@ public class Matrix {
 
         return resultMatrix.transpose();
     }
-    
+
     // вычисление определителя матрицы
-    // TODO создать метод
+    public double getMatrixDeterminant(Matrix matrix) {
+        double determinant = 0;
+
+        if (matrix.vectors.length != matrix.vectors[0].getSize() || matrix.vectors.length == 0) {
+            throw new IllegalArgumentException("Определитель матрицы может быть получен только у квадратной матрицы.");
+        }
+
+        if (matrix.vectors.length == 1) {
+            return matrix.vectors[0].getElement(0);
+        }
+
+        if (matrix.vectors.length == 2) {
+            determinant = matrix.vectors[0].getElement(0) * matrix.vectors[1].getElement(1) - matrix.vectors[1].getElement(0) * matrix.vectors[0].getElement(1);
+        } else {
+            for (int i = 0; i < matrix.vectors.length; i++) {
+                determinant += Math.pow(-1, i + 2) * matrix.vectors[0].getElement(i) * getMatrixDeterminant(getMinor(i, matrix));
+            }
+        }
+
+        return determinant;
+    }
+
+    private static Matrix getMinor(int deletedColumn, Matrix matrix) {
+        int matrixRow = matrix.vectors.length;
+        int matrixColumn = matrix.vectors[0].getSize();
+        Matrix newMatrix = new Matrix(matrixRow - 1, matrixColumn - 1);
+
+        for (int i = 1; i < matrixRow; i++) {
+            double[] numbers = new double[matrixColumn - 1];
+            int k = 0;
+
+            for (int j = 0; j < matrixColumn; j++) {
+                if (j == deletedColumn) {
+                    continue;
+                }
+
+                numbers[k] = matrix.vectors[i].getElement(j);
+                k++;
+            }
+
+            newMatrix.vectors[i - 1] = new Vector(matrixColumn - 1, numbers);
+        }
+
+        return newMatrix;
+    }
 }

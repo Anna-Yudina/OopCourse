@@ -4,7 +4,6 @@ package ru.academits.yudina.matrix_main;
 import ru.academits.yudina.matrix.Matrix;
 import ru.academits.yudina.vector.Vector;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Main {
@@ -34,7 +33,6 @@ public class Main {
         vectors1[0] = new Vector(new double[]{1, 2, 3, 4});
         vectors1[1] = new Vector(new double[]{5, 6, 7, 8});
         vectors1[2] = new Vector(new double[]{9, 10, 11, 12});
-
         Matrix matrix4 = new Matrix(vectors1);
         System.out.println(matrix4);
 
@@ -80,7 +78,6 @@ public class Main {
         System.out.println("Вторая матрица: " + matrix4);
         matrix2.add(matrix4);
         System.out.println("Получившийся результат сложения двух матриц: " + matrix2);
-
         System.out.println("Проверка метода add, если матрицы не равны:");
 
         double[][] dimension2 = {
@@ -161,5 +158,19 @@ public class Main {
         System.out.println("Вектор: " + vector4);
         Vector vector5 = matrix9.multiplyMatrixAndVector(vector4);
         System.out.println("Результат перемножения матрицы на вектор: " + vector5);
+
+        System.out.println("_______________");
+        System.out.println("Проверяем метод getMatrixDeterminant(Matrix matrix):");
+        double[][] dimension5 = {
+                {10, 2, 3, 4},
+                {4, 5, 6, 6},
+                {7, 8, 10, 2},
+                {1, 2, 3, 41}
+        };
+
+        Matrix testMatrix = new Matrix(dimension5);
+        System.out.println("Матрица: " + testMatrix);
+        double determinant = testMatrix.getMatrixDeterminant(testMatrix);
+        System.out.println(determinant);
     }
 }
