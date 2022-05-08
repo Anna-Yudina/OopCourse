@@ -52,6 +52,7 @@ public class MyHashTable<E> implements Collection<E> {
             return (T[]) Arrays.copyOf(toArray(), size, array.getClass());
         }
 
+        //noinspection SuspiciousSystemArraycopy
         System.arraycopy(toArray(), 0, array, 0, size);
 
         if (array.length > size) {
@@ -136,14 +137,16 @@ public class MyHashTable<E> implements Collection<E> {
             i++;
         }
 
-        modCount++;
+        if (isDeleted) {
+            modCount++;
+        }
 
         return isDeleted;
     }
 
     @Override
     public void clear() {
-        if (lists == null) {
+        if (size == 0) {
             return;
         }
 
@@ -164,11 +167,7 @@ public class MyHashTable<E> implements Collection<E> {
     public boolean contains(Object object) {
         int index = getIndex(object);
 
-        if (lists[index] == null) {
-            return false;
-        }
-
-        return lists[index].contains(object);
+        return lists[index] != null && lists[index].contains(object);
     }
 
     @Override
@@ -185,7 +184,7 @@ public class MyHashTable<E> implements Collection<E> {
     @Override
     public boolean retainAll(Collection<?> collection) {
         if (collection.isEmpty()) {
-            if (lists == null) {
+            if (size == 0) {
                 return false;
             }
 
@@ -207,20 +206,22 @@ public class MyHashTable<E> implements Collection<E> {
             }
         }
 
-        modCount++;
+        if (isDeleted) {
+            modCount++;
+        }
 
         return isDeleted;
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new MyIterator();
+        return new HashTableIterator();
     }
 
-    private class MyIterator implements Iterator<E> {
-        private int arrayIndex = 0;
-        private int listIndex = 0;
-        private int count = 0;
+    private class HashTableIterator implements Iterator<E> {
+        private int arrayIndex;
+        private int listIndex;
+        private int count;
         private final int expectedModCount = modCount;
 
         public boolean hasNext() {

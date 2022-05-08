@@ -26,7 +26,7 @@ public class Main {
 
         System.out.println("__________________________");
         System.out.println("Проверка метода 'boolean contains(Object object)'");
-        int number2 = 6;
+        int number2 = 2;
         System.out.println("Проверим содержит ли таблица " + Arrays.toString(numbers1.toArray()) + " элемент " + number2);
         String massage1 = numbers1.contains(number2) ? "да, содержит" : "нет, не содержит";
         System.out.println(massage1);
