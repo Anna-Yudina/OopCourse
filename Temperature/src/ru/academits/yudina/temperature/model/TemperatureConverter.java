@@ -3,14 +3,22 @@ package ru.academits.yudina.temperature.model;
 import java.util.List;
 
 public class TemperatureConverter {
-    public static List<Scale> SCALES;
+    private List<Scale> scales;
 
-    public TemperatureConverter(List<Scale> listScale) {
-        SCALES = listScale;
+    public List<Scale> getScales() {
+        return scales;
     }
 
-    public double convertTemperature(Scale inputSelectedScale, Scale outputSelectedScale, double temperature) {
-        return outputSelectedScale.convertFromCelsius(inputSelectedScale.convertToCelsius(temperature));
+    public void setScales(List<Scale> scales) {
+        this.scales = scales;
+    }
+
+    public TemperatureConverter(List<Scale> listScale) {
+        scales = listScale;
+    }
+
+    public double convertTemperature(Scale inputScale, Scale outputScale, double temperature) {
+        return outputScale.convertFromCelsius(inputScale.convertToCelsius(temperature));
     }
 }
 

@@ -22,8 +22,8 @@ public class TemperatureWindow implements View {
             }
 
             JFrame frame = new JFrame("Перевод температуры");
-            frame.setSize(600, 600);
-            frame.setMinimumSize(new Dimension(500, 300));
+            frame.setSize(550, 200);
+            frame.setMinimumSize(new Dimension(600, 250));
             frame.setLocationRelativeTo(null);
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -60,36 +60,36 @@ public class TemperatureWindow implements View {
             scaleFromLabel1.setForeground(color);
             scaleFromPanel.add(scaleFromLabel1);
 
-            Object[] selectedScales = TemperatureConverter.SCALES.toArray();
+            Object[] selectedScales = temperatureConverter.getScales().toArray();
 
-            JComboBox<Object> ScaleFromComboBox = new JComboBox<>(selectedScales);
-            ScaleFromComboBox.setPreferredSize(new Dimension(150, 20));
-            ScaleFromComboBox.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
-            scaleFromPanel.add(ScaleFromComboBox);
+            JComboBox<Object> inputScalesComboBox = new JComboBox<>(selectedScales);
+            inputScalesComboBox.setPreferredSize(new Dimension(150, 20));
+            inputScalesComboBox.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            scaleFromPanel.add(inputScalesComboBox);
 
             JLabel scaleFromLabel2 = new JLabel("в ");
             scaleFromLabel2.setFont(new Font("Comic Sans MS", Font.BOLD, 16)); // установка шрифта
             scaleFromLabel2.setForeground(color);
             scaleFromPanel.add(scaleFromLabel2);
 
-            JComboBox<Object> ScaleToComboBox = new JComboBox<>(selectedScales);
+            JComboBox<Object> outputScalesComboBox = new JComboBox<>(selectedScales);
             constrainsRight.gridx = 1;
             constrainsRight.gridy = 1;
-            ScaleToComboBox.setPreferredSize(new Dimension(155, 20));
-            ScaleToComboBox.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
-            mainPanel.add(ScaleToComboBox, constrainsRight);
+            outputScalesComboBox.setPreferredSize(new Dimension(155, 20));
+            outputScalesComboBox.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            mainPanel.add(outputScalesComboBox, constrainsRight);
 
             JPanel resultPanel = new JPanel();
             constrainsLeft.gridx = 1;
             constrainsLeft.gridy = 3;
             mainPanel.add(resultPanel, constrainsLeft);
 
-            JLabel resultLabel1 = new JLabel("Результат:");
-            resultLabel1.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
-            resultPanel.add(resultLabel1);
+            JLabel resultTextLabel = new JLabel("Результат:");
+            resultTextLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            resultPanel.add(resultTextLabel);
 
-            JLabel resultLabel2 = new JLabel();
-            resultLabel2.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            JLabel outputTemperatureLabel = new JLabel();
+            outputTemperatureLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
 
             JButton okButton = new JButton("Перевести");
             okButton.setPreferredSize(new Dimension(155, 30));
@@ -98,12 +98,12 @@ public class TemperatureWindow implements View {
 
             okButton.addActionListener(e -> {
                 try {
-                    double temperature = Double.parseDouble(temperatureField.getText());
-                    Scale inputSelectedScale = (Scale) ScaleFromComboBox.getSelectedItem();
-                    Scale outputSelectedScale = (Scale) ScaleToComboBox.getSelectedItem();
+                    double inputTemperature = Double.parseDouble(temperatureField.getText());
+                    Scale inputScale = (Scale) inputScalesComboBox.getSelectedItem();
+                    Scale outputScale = (Scale) outputScalesComboBox.getSelectedItem();
 
-                    String temperatureAfterConvert = String.format("%.2f", temperatureConverter.convertTemperature(inputSelectedScale, outputSelectedScale, temperature));
-                    resultLabel2.setText(temperatureAfterConvert);
+                    String outputTemperature = String.format("%.2f", temperatureConverter.convertTemperature(inputScale, outputScale, inputTemperature));
+                    outputTemperatureLabel.setText(outputTemperature);
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frame, "Температура должна быть числом", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 }
@@ -113,7 +113,7 @@ public class TemperatureWindow implements View {
             constrainsRight.gridy = 2;
             mainPanel.add(okButton, constrainsRight);
 
-            resultPanel.add(resultLabel2);
+            resultPanel.add(outputTemperatureLabel);
 
             frame.setVisible(true);
         });

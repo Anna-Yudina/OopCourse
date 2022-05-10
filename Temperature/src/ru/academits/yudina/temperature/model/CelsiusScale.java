@@ -1,8 +1,6 @@
 package ru.academits.yudina.temperature.model;
 
 public class CelsiusScale implements Scale {
-    public static String celsiusString = "Цельсий";
-
     @Override
     public double convertToCelsius(double temperature) {
         return temperature;
@@ -16,6 +14,5 @@ public class CelsiusScale implements Scale {
     @Override
     public String toString() {
         return "Цельсий";
-
     }
 }
