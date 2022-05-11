@@ -3,7 +3,6 @@ package ru.academits.yudina.tree_main;
 import ru.academits.yudina.tree.Tree;
 
 import java.util.Comparator;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 public class Main {
@@ -23,7 +22,7 @@ public class Main {
 
         System.out.println("Распечатаем дерево с помощью обхода в глубину с помощью рекурсии:");
         Consumer<Integer> consumer = x -> System.out.print(x + " ");
-        numbers1.depthTraversalRecursion(consumer);
+        numbers1.depthTraversalWithRecursion(consumer);
 
         System.out.println(System.lineSeparator() + "____________________");
         System.out.println("Распечатаем дерево с помощью обхода в глубину без рекурсии:");
@@ -37,11 +36,15 @@ public class Main {
         System.out.println("Эксперименты с компаратором:");
 
         Comparator<Integer> comparator = (number1, number2) -> {
-            if (number1 == null && number2 == null) {
-                return 0;
-            } else if (number1 == null && number2 != null) {
+            if (number1 == null) {
+                if (number2 == null) {
+                    return 0;
+                }
+
                 return -1;
-            } else if (number1 != null && number2 == null) {
+            }
+
+            if (number2 == null) {
                 return 1;
             }
 
@@ -60,14 +63,14 @@ public class Main {
         numbers2.add(12);
         numbers2.add(27);
         numbers2.add(null);
-        numbers2.depthTraversalRecursion(consumer);
+        numbers2.depthTraversalWithRecursion(consumer);
 
         System.out.println(System.lineSeparator() + "________________");
         System.out.println("Создадим пустое дерево:");
         Tree<Integer> numbers3 = new Tree<>();
-        numbers3.depthTraversalRecursion(consumer);
-        System.out.println(numbers3.toString());
-        System.out.println(numbers2.toString());
+        numbers3.depthTraversalWithRecursion(consumer);
+        System.out.println(numbers3);
+        System.out.println(numbers2);
 
         System.out.println("_____________________");
         System.out.println("Удалим корень дерева: " + 20);
