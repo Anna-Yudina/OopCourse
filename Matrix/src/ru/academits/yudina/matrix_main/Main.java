@@ -38,18 +38,18 @@ public class Main {
 
         System.out.println("_______________");
         System.out.println("Проверяем метод String getMatrixSize():");
-        System.out.println("Размеры матрицы: " + matrix2.getMatrixSize());
+        System.out.println("Размеры матрицы: " + matrix2.getRowCount());
 
         System.out.println("_______________");
         System.out.println("Проверяем метод Vector getVectorLine(int index):");
         System.out.println("Матрица: " + matrix2);
-        Vector vector1 = matrix2.getVectorLine(2);
+        Vector vector1 = matrix2.getRow(2);
         System.out.println(vector1);
 
         System.out.println("_______________");
         System.out.println("Проверяем метод Vector getVectorColumn(int index):");
         System.out.println("Матрица: " + matrix2);
-        Vector vector2 = matrix2.getVectorColumn(1);
+        Vector vector2 = matrix2.getColumn(1);
         System.out.println("Получили вектор-столбец по индексу 1: " + vector2);
 
         System.out.println("_______________");
@@ -59,12 +59,18 @@ public class Main {
         System.out.println("Матрица после умножения на скаляр 2: " + matrix2);
 
         System.out.println("_______________");
-        System.out.println("Проверяем метод void setVectorLine(int index, Vector vector):");
+        System.out.println("Проверяем метод void setRow(int index, Vector vector):");
         System.out.println("Матрица: " + matrix2);
-        Vector vector3 = new Vector(new double[]{5, 7, 8, 3});
+        Vector vector3 = new Vector(new double[]{5, 7, 8, 2});
         System.out.println("Вектор: " + vector3);
-        matrix2.setVectorLine(1, vector3);
+        matrix2.setRow(1, vector3);
         System.out.println("Матрица после вставки вектора по индексу 1: " + matrix2);
+
+        vector3.setElement(2, 10);
+        System.out.println("Вектор после изменения: " + vector3);
+        System.out.println("Матрица после изменения вектора: " + matrix2);
+        System.out.println();
+
 
         System.out.println("___________________");
         System.out.println("Проверка метода transpose():");
@@ -75,31 +81,43 @@ public class Main {
         System.out.println("___________________");
         System.out.println("Проверка метода void add(Matrix matrix):");
         System.out.println("Первая матрица: " + matrix2);
-        System.out.println("Вторая матрица: " + matrix4);
-        matrix2.add(matrix4);
-        System.out.println("Получившийся результат сложения двух матриц: " + matrix2);
-        System.out.println("Проверка метода add, если матрицы не равны:");
 
         double[][] dimension2 = {
                 {5, 7, 3},
                 {7, 0, 1},
                 {8, 1, 2},
-                {4, 8, 0},
-                {9, 6, 5}
+                {4, 8, 0}
         };
 
         Matrix matrix6 = new Matrix(dimension2);
-        System.out.println("Первая матрица: " + matrix2);
         System.out.println("Вторая матрица: " + matrix6);
-        matrix2.add(matrix6);
-        System.out.println("Результат после сложения: " + matrix2);
+
+        try {
+            matrix2.add(matrix6);
+            System.out.println("Получившийся результат сложения двух матриц: " + matrix2);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        System.out.println("Проверка метода add, если матрицы не равны:");
+
+        System.out.println("Первая матрица: " + matrix2);
+        System.out.println("Вторая матрица: " + matrix4);
+
+        try {
+            matrix2.add(matrix4);
+            System.out.println("Результат после сложения: " + matrix2);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.println("_______________");
         System.out.println("Проверяем метод void subtract (Matrix matrix):");
-        System.out.println("Первая матрица: " + matrix3);
+        System.out.println("Первая матрица: " + matrix2);
         System.out.println("Вторая матрица: " + matrix6);
-        matrix3.subtract(matrix6);
-        System.out.println("Результат вычитания: " + matrix3);
+        matrix2.subtract(matrix6);
+        System.out.println("Результат вычитания: " + matrix2);
 
         System.out.println("_______________");
         System.out.println("Проверяем статический метод getSum:");
@@ -110,12 +128,14 @@ public class Main {
 
         System.out.println("_______________");
         System.out.println("Проверяем статический метод getDifference:");
-        System.out.println("Первая матрица: " + matrix3);
+        System.out.println("Первая матрица: " + matrix2);
         System.out.println("Вторая матрица: " + matrix6);
-        Matrix resultMatrix2 = Matrix.getDifference(matrix3, matrix6);
-        System.out.println("Результат вычитания: " + resultMatrix2);
+        Matrix resultMatrix2 = Matrix.getDifference(matrix2, matrix6);
+        System.out.println("Результат после вычитания: " + resultMatrix2);
 
-        double [][] twoDimArray = {{5,7}, {7,0}, {8,1,2,3}};
+        System.out.println("_______________");
+        System.out.println("Проверка увеличения матрицы:");
+        double[][] twoDimArray = {{5, 7}, {7, 0}, {8, 1, 2, 3}};
         System.out.println(Arrays.deepToString(twoDimArray));
         Matrix matrix7 = new Matrix(twoDimArray);
         System.out.println(matrix7);
@@ -148,15 +168,15 @@ public class Main {
 
         Matrix matrix9 = new Matrix(dimension3);
         Matrix matrix10 = new Matrix(dimension4);
-        Matrix resultMatrix = Matrix.getMultiply(matrix9,matrix10);
+        Matrix resultMatrix = Matrix.getProduct(matrix9, matrix10);
         System.out.println(resultMatrix);
 
         System.out.println("_______________");
-        System.out.println("Проверяем метод Vector multiplyMatrixAndVector(Vector vector):");
+        System.out.println("Проверяем метод Vector multiplyByVector(Vector vector):");
         Vector vector4 = new Vector(new double[]{2, 6, 2, 1});
         System.out.println("Матрица: " + matrix9);
         System.out.println("Вектор: " + vector4);
-        Vector vector5 = matrix9.multiplyMatrixAndVector(vector4);
+        Vector vector5 = matrix9.multiplyByVector(vector4);
         System.out.println("Результат перемножения матрицы на вектор: " + vector5);
 
         System.out.println("_______________");
@@ -170,7 +190,7 @@ public class Main {
 
         Matrix testMatrix = new Matrix(dimension5);
         System.out.println("Матрица: " + testMatrix);
-        double determinant = testMatrix.getMatrixDeterminant(testMatrix);
+        double determinant = testMatrix.getMatrixDeterminant();
         System.out.println(determinant);
     }
 }
