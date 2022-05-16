@@ -154,16 +154,17 @@ public class Main {
         System.out.println(matrix8);
 
         System.out.println("_______________");
-        System.out.println("Проверяем метод Matrix getMultiply(Matrix matrix1, Matrix matrix2)");
+        System.out.println("Проверяем метод Matrix getProduct(Matrix matrix1, Matrix matrix2)");
         double[][] dimension3 = {
                 {1, 2, 3, 4},
-                {4, 3, 2, 1}
+                {4, 3, 2, 1},
+                {2, 4, 5, 3}
         };
         double[][] dimension4 = {
-                {2, 4},
-                {6, 4},
-                {2, 4},
-                {6, 4}
+                {2, 4, 3},
+                {6, 4, 2},
+                {2, 4, 7},
+                {6, 4, 3}
         };
 
         Matrix matrix9 = new Matrix(dimension3);

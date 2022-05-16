@@ -282,20 +282,23 @@ public class Matrix {
                     " должно быть равно числу строк второй матрицы" + matrix2.getRowCount());
         }
 
-        //Matrix resultMatrix = new Matrix(matrix2.getColumnCount(), matrix1.getRowCount());
-        double[][] matrixComponentArray = new double[matrix2.getColumnCount()][matrix1.getRowCount()];
+        Vector[] resultMatrixRows = new Vector[matrix1.getRowCount()];
 
-//        for (int i = 0; i < matrix1.getRowCount(); i++) {
-//            for (int j = 0; j < matrix2.getColumnCount(); j++) {
-//                matrixComponentArray[i][j] = multiplyMatricesCell(firstMatrix, secondMatrix, i, col);
-//            }
-//        }
-        
-//        for (int i = 0; i < matrix2.getColumnCount(); i++) {
-//            resultMatrix.matrixRows[i] = matrix1.multiplyByVector(matrix2.getColumn(i));
-//        }
+        for (int i = 0; i < matrix1.getRowCount(); i++) {
+            resultMatrixRows[i] = new Vector(matrix2.getColumnCount());
 
-        return new Matrix(matrixComponentArray);
+            for (int j = 0; j < matrix2.getColumnCount(); j++) {
+                double cellData = 0;
+
+                for (int k = 0; k < matrix2.getRowCount(); k++) {
+                    cellData += matrix1.matrixRows[i].getElement(k) * matrix2.matrixRows[k].getElement(j);
+                }
+
+                resultMatrixRows[i].setElement(j, cellData);
+            }
+        }
+
+        return new Matrix(resultMatrixRows);
     }
 
     // вычисление определителя матрицы
