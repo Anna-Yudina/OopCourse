@@ -79,8 +79,8 @@ public class Main {
         System.out.println("число элементов после удаления: " + numbers1.getCount());
 
         System.out.println("_____________________");
-        System.out.println("Удалим лист дерева: " + 4);
-        numbers1.remove(4);
+        System.out.println("Удалим лист дерева: " + 12);
+        numbers1.remove(12);
         System.out.println("Дерево после удаления: " + numbers1);
         System.out.println("число элементов после удаления: " + numbers1.getCount());
 

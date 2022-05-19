@@ -49,22 +49,22 @@ public class Tree<T> {
     private int compare(T data1, T data2) {
         if (comparator != null) {
             return comparator.compare(data1, data2);
-        } else {
-            if (data1 == null) {
-                if (data2 == null) {
-                    return 0;
-                }
-
-                return -1;
-            }
-
-            if (data2 == null) {
-                return 1;
-            }
-
-            //noinspection unchecked
-            return ((Comparable<? super T>) data1).compareTo(data2);
         }
+
+        if (data1 == null) {
+            if (data2 == null) {
+                return 0;
+            }
+
+            return -1;
+        }
+
+        if (data2 == null) {
+            return 1;
+        }
+
+        //noinspection unchecked
+        return ((Comparable<? super T>) data1).compareTo(data2);
     }
 
     public int getCount() {
@@ -86,9 +86,9 @@ public class Tree<T> {
     }
 
     public boolean remove(T data) {
-        TreeNode<T> deletedNodeParent = getParentNode(data);
+        TreeNode<T> removedNodeParent = getParentNode(data);
 
-        if (deletedNodeParent == null) {
+        if (removedNodeParent == null) {
             if (compare(root.getData(), data) != 0) {
                 return false;
             }
@@ -97,85 +97,80 @@ public class Tree<T> {
             return true;
         }
 
-        TreeNode<T> deletedNode;
+        TreeNode<T> removedNode;
 
-        if (compare(deletedNodeParent.getLeft().getData(), data) == 0) {
-            deletedNode = deletedNodeParent.getLeft();
+        int comparisonResult = compare(removedNodeParent.getData(), data);
+
+        if (comparisonResult > 0) {
+            removedNode = removedNodeParent.getLeft();
         } else {
-            deletedNode = deletedNodeParent.getRight();
+            removedNode = removedNodeParent.getRight();
         }
 
-        int comparisonResult = compare(deletedNodeParent.getData(), data);
-
-        if (deletedNode.getLeft() == null) {
-            if (deletedNode.getRight() == null) {
-                if (comparisonResult > 0) {
-                    deletedNodeParent.setLeft(null);
-                } else {
-                    deletedNodeParent.setRight(null);
-                }
-            } else {
-                if (comparisonResult > 0) {
-                    deletedNodeParent.setLeft(deletedNode.getRight());
-                } else {
-                    deletedNodeParent.setRight(deletedNode.getRight());
-                }
-            }
-
-            count--;
-            return true;
-        }
-
-        if (deletedNode.getRight() == null) {
+        if (removedNode.getLeft() == null) {
             if (comparisonResult > 0) {
-                deletedNodeParent.setLeft(deletedNode.getLeft());
+                removedNodeParent.setLeft(removedNode.getRight());
             } else {
-                deletedNodeParent.setRight(deletedNode.getLeft());
+                removedNodeParent.setRight(removedNode.getRight());
             }
 
             count--;
             return true;
         }
 
-        removeNode(deletedNode, deletedNodeParent);
+        if (removedNode.getRight() == null) {
+            if (comparisonResult > 0) {
+                removedNodeParent.setLeft(removedNode.getLeft());
+            } else {
+                removedNodeParent.setRight(removedNode.getLeft());
+            }
+
+            count--;
+            return true;
+        }
+
+        removeNode(removedNode, removedNodeParent);
 
         return true;
     }
 
-    private void removeNode(TreeNode<T> deletedNode, TreeNode<T> deletedNodeParent) {
-        TreeNode<T> minNodeParent = getMinNodeParent(deletedNode);
+    private void removeNode(TreeNode<T> removedNode, TreeNode<T> removedNodeParent) {
+        TreeNode<T> minNodeParent = getMinNodeParent(removedNode);
         TreeNode<T> minNode;
-        int comparisonResult = compare(deletedNode.getData(), minNodeParent.getData());
 
-        if (comparisonResult == 0) {
+        if (removedNode == minNodeParent) {
             minNode = minNodeParent.getRight();
         } else {
             minNode = minNodeParent.getLeft();
             minNodeParent.setLeft(minNode.getRight());
         }
 
-        TreeNode<T> deletedNodeLeftChild = deletedNode.getLeft();
-        TreeNode<T> deletedNodeRightChild = deletedNode.getRight();
+        TreeNode<T> removedNodeLeftChild = removedNode.getLeft();
+        TreeNode<T> removedNodeRightChild = removedNode.getRight();
 
-        if (deletedNodeParent == null) {
+        if (removedNodeParent == null) {
             root = minNode;
         } else {
-            if (deletedNodeParent.getLeft() == deletedNode) {
-                deletedNodeParent.setLeft(minNode);
+            if (removedNodeParent.getLeft() == removedNode) {
+                removedNodeParent.setLeft(minNode);
             } else {
-                deletedNodeParent.setRight(minNode);
+                removedNodeParent.setRight(minNode);
             }
         }
 
-        if (comparisonResult != 0) {
-            minNode.setRight(deletedNodeRightChild);
+        if (removedNode != minNodeParent) {
+            minNode.setRight(removedNodeRightChild);
         }
 
-        minNode.setLeft(deletedNodeLeftChild);
+        minNode.setLeft(removedNodeLeftChild);
         count--;
     }
 
-    public TreeNode<T> getParentNode(T data) {
+    private TreeNode<T> getParentNode(T data) {
+        if (root == null) {
+            return null;
+        }
+
         TreeNode<T> node = root;
         TreeNode<T> parentNode = null;
 
@@ -206,9 +201,9 @@ public class Tree<T> {
         }
     }
 
-    private TreeNode<T> getMinNodeParent(TreeNode<T> deletedNode) {
-        TreeNode<T> minNode = deletedNode.getRight();
-        TreeNode<T> minNodeParent = deletedNode;
+    private TreeNode<T> getMinNodeParent(TreeNode<T> removedNode) {
+        TreeNode<T> minNode = removedNode.getRight();
+        TreeNode<T> minNodeParent = removedNode;
 
         for (; ; ) {
             if (minNode.getLeft() == null) {
