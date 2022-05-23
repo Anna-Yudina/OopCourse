@@ -37,17 +37,13 @@ public class Main {
         System.out.println(matrix4);
 
         System.out.println("_______________");
-        System.out.println("Проверяем метод String getMatrixSize():");
-        System.out.println("Размеры матрицы: " + matrix2.getRowCount());
-
-        System.out.println("_______________");
-        System.out.println("Проверяем метод Vector getVectorLine(int index):");
+        System.out.println("Проверяем метод Vector getRow(int index):");
         System.out.println("Матрица: " + matrix2);
         Vector vector1 = matrix2.getRow(2);
         System.out.println(vector1);
 
         System.out.println("_______________");
-        System.out.println("Проверяем метод Vector getVectorColumn(int index):");
+        System.out.println("Проверяем метод Vector getColumn(int index):");
         System.out.println("Матрица: " + matrix2);
         Vector vector2 = matrix2.getColumn(1);
         System.out.println("Получили вектор-столбец по индексу 1: " + vector2);
@@ -181,7 +177,7 @@ public class Main {
         System.out.println("Результат перемножения матрицы на вектор: " + vector5);
 
         System.out.println("_______________");
-        System.out.println("Проверяем метод getMatrixDeterminant(Matrix matrix):");
+        System.out.println("Проверяем метод getDeterminant(Matrix matrix):");
         double[][] dimension5 = {
                 {10, 2, 3, 4},
                 {4, 5, 6, 6},
@@ -191,7 +187,7 @@ public class Main {
 
         Matrix testMatrix = new Matrix(dimension5);
         System.out.println("Матрица: " + testMatrix);
-        double determinant = testMatrix.getMatrixDeterminant();
+        double determinant = testMatrix.getDeterminant();
         System.out.println(determinant);
     }
 }
