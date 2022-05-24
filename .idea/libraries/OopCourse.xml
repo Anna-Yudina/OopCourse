@@ -7,7 +7,6 @@
     <SOURCES>
       <root url="file://$PROJECT_DIR$/ArrayListHome/src" />
       <root url="file://$PROJECT_DIR$/ArrayList/src" />
-      <root url="file://$PROJECT_DIR$/CSVProject/src" />
       <root url="file://$PROJECT_DIR$/HashTable/src" />
       <root url="file://$PROJECT_DIR$/Lambda/src" />
       <root url="file://$PROJECT_DIR$/List/src" />
@@ -17,6 +16,7 @@
       <root url="file://$PROJECT_DIR$/Temperature/src" />
       <root url="file://$PROJECT_DIR$/Tree/src" />
       <root url="file://$PROJECT_DIR$/Vector/src" />
+      <root url="file://$PROJECT_DIR$/CsvToHtmlConverter/src" />
     </SOURCES>
   </library>
 </component>
