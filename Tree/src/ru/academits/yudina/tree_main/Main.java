@@ -95,5 +95,7 @@ public class Main {
         numbers1.remove(null);
         System.out.println("Дерево после удаления: " + numbers1);
         System.out.println("число элементов после удаления: " + numbers1.getCount());
+
+        numbers3.remove(5);
     }
 }

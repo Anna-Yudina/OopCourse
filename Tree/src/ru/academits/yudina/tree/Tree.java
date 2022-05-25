@@ -86,6 +86,10 @@ public class Tree<T> {
     }
 
     public boolean remove(T data) {
+        if (root == null) {
+            return false;
+        }
+
         TreeNode<T> removedNodeParent = getParentNode(data);
 
         if (removedNodeParent == null) {
