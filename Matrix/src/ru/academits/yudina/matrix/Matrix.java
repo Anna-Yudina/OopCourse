@@ -19,6 +19,10 @@ public class Matrix {
     }
 
     public Matrix(double[][] matrixComponentsArray) {
+        if (matrixComponentsArray.length == 0) {
+            throw new IllegalArgumentException("Количество строк переданного двумерного массива должно быть > 0");
+        }
+
         int columnsCount = 0;
 
         for (double[] row : matrixComponentsArray) {
@@ -27,7 +31,7 @@ public class Matrix {
             }
         }
 
-        if (columnsCount == 0){
+        if (columnsCount == 0) {
             throw new IllegalArgumentException("Переданный двумерный массив не содержит элементов");
         }
 

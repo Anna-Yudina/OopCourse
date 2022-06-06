@@ -1,6 +1,5 @@
 package ru.academits.yudina.matrix_main;
 
-
 import ru.academits.yudina.matrix.Matrix;
 import ru.academits.yudina.vector.Vector;
 
@@ -67,7 +66,6 @@ public class Main {
         System.out.println("Матрица после изменения вектора: " + matrix2);
         System.out.println();
 
-
         System.out.println("___________________");
         System.out.println("Проверка метода transpose():");
         System.out.println("Транспонируем матрицу: " + matrix2);
@@ -95,9 +93,7 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-
         System.out.println("Проверка метода add, если матрицы не равны:");
-
         System.out.println("Первая матрица: " + matrix2);
         System.out.println("Вторая матрица: " + matrix4);
 
@@ -139,9 +135,9 @@ public class Main {
         System.out.println("_______________");
         System.out.println("Проверяем конструктор Matrix(Vector[] vectors)");
         Vector[] vectors = new Vector[3];
-        double[] array1 = new double[]{2, 4, 7, 15, 8, 1, 6};
-        double[] array2 = new double[]{1, 2, 3, 4};
-        double[] array3 = new double[]{3, 4, 5};
+        double[] array1 = {2, 4, 7, 15, 8, 1, 6};
+        double[] array2 = {1, 2, 3, 4};
+        double[] array3 = {3, 4, 5};
         vectors[0] = new Vector(array1);
         vectors[1] = new Vector(array2);
         vectors[2] = new Vector(array3);
