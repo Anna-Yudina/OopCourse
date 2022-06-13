@@ -4,21 +4,21 @@ import java.io.*;
 
 public class CsvToHtmlConverter {
     public void writeHtmlFile(BufferedReader reader, PrintWriter writer) throws IOException {
-        writer.write("<!DOCTYPE html>" + System.lineSeparator());
-        writer.write("<html>" + System.lineSeparator());
-        writer.write("    <head>" + System.lineSeparator());
-        writer.write("        <meta charset=\"UTF-8\">" + System.lineSeparator());
-        writer.write("        <title>Сконвертированный файл из CSV в HTML</title>" + System.lineSeparator());
-        writer.write("    </head>" + System.lineSeparator());
-        writer.write("    <body>" + System.lineSeparator());
-        writer.write("        <table>" + System.lineSeparator());
+        writer.println("<!DOCTYPE html>");
+        writer.println("<html>");
+        writer.println("    <head>");
+        writer.println("        <meta charset=\"UTF-8\">");
+        writer.println("        <title>Сконвертированный файл из CSV в HTML</title>");
+        writer.println("    </head>");
+        writer.println("    <body>");
+        writer.println("        <table>");
 
         String line;
         boolean isCellInQuotes = false;
 
         while ((line = reader.readLine()) != null) {
             if (!isCellInQuotes) {
-                writer.write("            <tr>" + System.lineSeparator());
+                writer.println("            <tr>");
                 writer.write("                <td>");
             }
 
@@ -38,7 +38,7 @@ public class CsvToHtmlConverter {
                     }
                 } else if (c == ',') {
                     if (!isCellInQuotes) {
-                        writer.write("</td>" + System.lineSeparator());
+                        writer.println("</td>");
                         writer.write("                <td>");
                     } else {
                         writer.write(c);
@@ -55,15 +55,15 @@ public class CsvToHtmlConverter {
             }
 
             if (!isCellInQuotes) {
-                writer.write("</td>" + System.lineSeparator());
-                writer.write("            </tr>" + System.lineSeparator());
+                writer.println("</td>");
+                writer.println("            </tr>");
             } else {
                 writer.write("<br/>");
             }
         }
 
-        writer.write("        </table>" + System.lineSeparator());
-        writer.write("    </body>" + System.lineSeparator());
-        writer.write("</html>" + System.lineSeparator());
+        writer.println("        </table>");
+        writer.println("    </body>");
+        writer.println("</html>");
     }
 }
